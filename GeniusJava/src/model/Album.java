@@ -37,6 +37,7 @@ public class Album {
     }
 
     public String getAlbumInfo() {
+        var musicas = this.musicas.toString();
         return "Album{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +

@@ -12,8 +12,22 @@ public class Produtor extends Pessoa {
         this.descricao = descricao;
         this.funcao = funcao;
     }
-    public String getInfoProdutor(){
-        return super.getInfoPessoa() + " "+ descricao + " " + funcao.toString().toLowerCase();
+    public String getInfoProdutor() {
+        return "Produtor{" +
+                super.getInfoPessoa() +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", atribuicao=" + funcao +
+                '}';
+    }
+
+    @Override
+    public String toString() {
+        return "Produtor{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", funcao=" + funcao +
+                '}';
     }
 
     public int getId() {

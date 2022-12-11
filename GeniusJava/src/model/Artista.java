@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class Artista extends Pessoa {
     private int id;
@@ -16,7 +17,21 @@ public class Artista extends Pessoa {
     }
 
     public String getInfoArtista() {
-        return super.getInfoPessoa() + " " + this.descricao + " " + this.generoMusical.getNome();
+        return "Artista{" +
+                super.getInfoPessoa() +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", generoMusical=" + generoMusical +
+                '}';
+    }
+
+    @Override
+    public String toString() {
+        return "Artista{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", generoMusical=" + generoMusical +
+                '}';
     }
 
     public String getDescricao() {
@@ -25,5 +40,17 @@ public class Artista extends Pessoa {
 
     public GeneroMusical getGeneroMusical() {
         return generoMusical;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Artista artista)) return false;
+        return id == artista.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

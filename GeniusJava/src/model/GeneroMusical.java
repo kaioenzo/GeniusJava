@@ -19,7 +19,8 @@ public class GeneroMusical {
         return id;
     }
 
-    public String getDescricao() {
+    @Override
+    public String toString() {
         return "GeneroMusical{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +

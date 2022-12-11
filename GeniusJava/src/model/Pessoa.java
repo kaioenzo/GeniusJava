@@ -19,7 +19,11 @@ public abstract class Pessoa {
     }
 
     public String getInfoPessoa() {
-        return this.nome + " " + this.getDataDeNascimento().toString() + " ";
+        return "Pessoa{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", dataDeNascimento=" + dataDeNascimento +
+                '}';
     }
 
     public String getNome() {

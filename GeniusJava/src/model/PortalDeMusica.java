@@ -42,13 +42,17 @@ public class PortalDeMusica {
             ArrayList<Artista> artistas,
             ArrayList<Produtor> produtores
     ) {
+        HashSet<GeneroMusical> generoMusicalsSet = new HashSet<GeneroMusical>();
+        generoMusicalsSet.add(genero);
+        HashSet<Artista> artistaSet = new HashSet<Artista>(artistas);
+        HashSet<Produtor> produtorHashSet = new HashSet<Produtor>(produtores);
         musicas.put(musicaId, new Musica(
                 musicaId,
                 nome,
-                genero,
+                generoMusicalsSet,
                 letra,
-                artistas,
-                produtores));
+                artistaSet,
+                produtorHashSet));
         musicaId++;
     }
 
@@ -67,15 +71,30 @@ public class PortalDeMusica {
         ));
     }
 
-    public void cadastrarAlbum(
+    public void cadastrarProdutor(
             String nome,
             LocalDate dataDeNascimento,
+            String descricao,
+            Atribuicao atribuicao
+    ) {
+        produtores.put(artistaId, new Produtor(
+                produtorId,
+                nome,
+                dataDeNascimento,
+                descricao,
+                atribuicao
+        ));
+    }
+
+    public void cadastrarAlbum(
+            String nome,
+            LocalDate dataDeLancamento,
             ArrayList<Musica> musicas
     ) {
         albums.put(albumId, new Album(
                 albumId,
                 nome,
-                dataDeNascimento,
+                dataDeLancamento,
                 musicas));
     }
 
@@ -89,12 +108,12 @@ public class PortalDeMusica {
         return artistaId;
     }
 
-    public int getProximoIdAlbum() {
-        return albumId;
-    }
-
     public int getProximoIdProdutor() {
         return produtorId;
+    }
+
+    public int getProximoIdAlbum() {
+        return albumId;
     }
 
     // Busca pelo id
@@ -118,12 +137,15 @@ public class PortalDeMusica {
 
     // Busca pelo nome
 
-    public Optional<Musica> getrMusicaPeloNome(String nome) {
+    public Optional<Musica> getMusicaPeloNome(String nome) {
         return musicas.values().stream().filter(m -> m.getNome().equals(nome)).findFirst();
     }
 
     public Optional<Artista> getArtistaPeloNome(String nome) {
         return artistas.values().stream().filter(a -> a.getNome().equals(nome)).findFirst();
+    }
+    public Optional<Produtor> getProdutorPeloNome(String nome) {
+        return produtores.values().stream().filter(a -> a.getNome().equals(nome)).findFirst();
     }
 
     public Optional<Album> getAlbumPeloNome(String nome) {
@@ -137,15 +159,18 @@ public class PortalDeMusica {
 
     // Excluir
 
-    public void exlcuirMusica(Musica musica){
+    public void exlcuirMusica(Musica musica) {
         musicas.remove(musica.getId());
     }
-    public void excluirArtista(Artista artista){
+
+    public void excluirArtista(Artista artista) {
         artistas.remove(artista.getId());
     }
-    public void excluirAlbum(Album album){
+
+    public void excluirAlbum(Album album) {
         albums.remove(album.getId());
     }
+
     public void excluirProdutor(Produtor produtor) {
         produtores.remove(produtor.getId());
     }

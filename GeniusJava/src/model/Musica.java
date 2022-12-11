@@ -14,19 +14,13 @@ public class Musica {
     private HashSet<Produtor> produtores;
 
 
-    public Musica(
-                  int id,
-                  String nome,
-                  GeneroMusical genero,
-                  String letra,
-                  ArrayList<Artista> artistas,
-                  ArrayList<Produtor> produtores) {
+    public Musica(int id, String nome, HashSet<GeneroMusical> generos, String letra, HashSet<Artista> artistas, HashSet<Produtor> produtores) {
         this.id = id;
         this.nome = nome;
-        this.artistas.addAll(artistas);
+        this.generos = generos;
         this.letra = letra;
-        this.artistas.addAll(artistas);
-        this.produtores.addAll(produtores);
+        this.artistas = artistas;
+        this.produtores = produtores;
     }
 
     public int getId() {
@@ -74,15 +68,18 @@ public class Musica {
 
     @Override
     public String toString() {
+        var generosString = this.generos.stream().toList();
         return "Musica{" +
                 "nome='" + nome + '\'' +
-                ", generos=" + generos +
+                ", generos=" + generosString +
                 ", letra='" + letra + '\'' +
                 ", artistas=" + artistas +
                 '}';
     }
 
     public String getMusicaInfo() {
+        var artistas = this.artistas.stream().toList();
+        var produtores = this.produtores.stream().toList();
         return "Musica{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
