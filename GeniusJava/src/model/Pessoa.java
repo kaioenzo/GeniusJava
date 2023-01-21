@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Pessoa {
     private int id;
@@ -32,6 +33,23 @@ public abstract class Pessoa {
 
     public LocalDate getDataDeNascimento() {
         return dataDeNascimento;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDataDeNascimento(LocalDate dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
+    }
+
+    public String getDataDeNascimentoFormatada() {
+
+        return dataDeNascimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }
 

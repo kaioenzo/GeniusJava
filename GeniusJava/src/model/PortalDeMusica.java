@@ -2,9 +2,14 @@ package model;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PortalDeMusica {
     private static final PortalDeMusica instaciaUnica = new PortalDeMusica();
+
+    public static PortalDeMusica getInstance() {
+        return instaciaUnica;
+    }
 
     private final Map<Integer, Musica> musicas;
     private final Map<Integer, Album> albums;
@@ -12,23 +17,23 @@ public class PortalDeMusica {
     private final Map<Integer, Produtor> produtores;
     private final Map<Integer, GeneroMusical> generosMusicais;
 
-    private int musicaId = 0;
-    private int albumId = 0;
-    private int artistaId = 0;
-    private int generoMusicalId = 0;
-    private int produtorId = 0;
+    private int musicaId = 1;
+    private int albumId = 1;
+    private int artistaId = 1;
+    private int generoMusicalId = 1;
+    private int produtorId = 1;
 
     private PortalDeMusica() {
         this.produtores = new HashMap<>();
         this.musicas = new HashMap<>();
         this.albums = new HashMap<>();
-        this.artistas = new HashMap();
+        this.artistas = new HashMap<>();
         this.generosMusicais = new HashMap<>();
     }
 
-    public static PortalDeMusica getInstance() {
-        return instaciaUnica;
-    }
+//    public static PortalDeMusica getInstance() {
+//        return instaciaUnica;
+//    }
 
     public void cadastrarGenero(String nome, String descricao) {
         generosMusicais.put(generoMusicalId, new GeneroMusical(generoMusicalId, nome, descricao));
@@ -42,10 +47,10 @@ public class PortalDeMusica {
             ArrayList<Artista> artistas,
             ArrayList<Produtor> produtores
     ) {
-        HashSet<GeneroMusical> generoMusicalsSet = new HashSet<GeneroMusical>();
+        HashSet<GeneroMusical> generoMusicalsSet = new HashSet<>();
         generoMusicalsSet.add(genero);
-        HashSet<Artista> artistaSet = new HashSet<Artista>(artistas);
-        HashSet<Produtor> produtorHashSet = new HashSet<Produtor>(produtores);
+        HashSet<Artista> artistaSet = new HashSet<>(artistas);
+        HashSet<Produtor> produtorHashSet = new HashSet<>(produtores);
         musicas.put(musicaId, new Musica(
                 musicaId,
                 nome,
@@ -60,7 +65,7 @@ public class PortalDeMusica {
             String nome,
             LocalDate dataDeNascimento,
             String descricao,
-            GeneroMusical generoMusical
+            String generoMusical
     ) {
         artistas.put(artistaId, new Artista(
                 artistaId,
@@ -69,6 +74,7 @@ public class PortalDeMusica {
                 descricao,
                 generoMusical
         ));
+        artistaId++;
     }
 
     public void cadastrarProdutor(
@@ -77,13 +83,14 @@ public class PortalDeMusica {
             String descricao,
             Atribuicao atribuicao
     ) {
-        produtores.put(artistaId, new Produtor(
+        produtores.put(produtorId, new Produtor(
                 produtorId,
                 nome,
                 dataDeNascimento,
                 descricao,
                 atribuicao
         ));
+        produtorId++;
     }
 
     public void cadastrarAlbum(
@@ -96,6 +103,20 @@ public class PortalDeMusica {
                 nome,
                 dataDeLancamento,
                 musicas));
+        albumId++;
+    }
+
+
+    public Artista[] getAllArtistas() {
+        return artistas.values().toArray(new Artista[0]);
+    }
+
+    public Musica[] getAllMusicas() {
+        return musicas.values().toArray(new Musica[0]);
+    }
+
+    public Produtor[] getAllProdutores() {
+        return produtores.values().toArray(new Produtor[0]);
     }
 
     // Retorna o próximo id
@@ -141,11 +162,12 @@ public class PortalDeMusica {
         return musicas.values().stream().filter(m -> m.getNome().equals(nome)).findFirst();
     }
 
-    public Optional<Artista> getArtistaPeloNome(String nome) {
-        return artistas.values().stream().filter(a -> a.getNome().equals(nome)).findFirst();
+    public List<Artista> getArtistasPeloNome(String nome) {
+        return artistas.values().stream().filter(a -> a.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
     }
-    public Optional<Produtor> getProdutorPeloNome(String nome) {
-        return produtores.values().stream().filter(a -> a.getNome().equals(nome)).findFirst();
+
+    public List<Produtor> getProdutoresPeloNome(String nome) {
+        return produtores.values().stream().filter(a -> a.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
     }
 
     public Optional<Album> getAlbumPeloNome(String nome) {
@@ -174,4 +196,7 @@ public class PortalDeMusica {
     public void excluirProdutor(Produtor produtor) {
         produtores.remove(produtor.getId());
     }
+
+
+
 }

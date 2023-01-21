@@ -1,15 +1,14 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 public class Artista extends Pessoa {
-    private int id;
+    final private int id;
     private String descricao;
-    private GeneroMusical generoMusical;
+    private String generoMusical;
 
-    public Artista(int id, String nome, LocalDate dataDeNascimento, String descricao, GeneroMusical generoMusical) {
+    public Artista(int id, String nome, LocalDate dataDeNascimento, String descricao, String generoMusical) {
         super(id, nome, dataDeNascimento);
         this.id = id;
         this.descricao = descricao;
@@ -38,7 +37,7 @@ public class Artista extends Pessoa {
         return descricao;
     }
 
-    public GeneroMusical getGeneroMusical() {
+    public String getGeneroMusical() {
         return generoMusical;
     }
 
@@ -52,5 +51,14 @@ public class Artista extends Pessoa {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setGeneroMusical(String generoMusical) {
+        this.generoMusical = generoMusical;
     }
 }

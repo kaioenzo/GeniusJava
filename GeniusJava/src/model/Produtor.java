@@ -3,12 +3,13 @@ package model;
 import java.time.LocalDate;
 
 public class Produtor extends Pessoa {
-    private int id;
+    final private int id;
     private String descricao;
     private Atribuicao funcao;
 
     public Produtor(int id, String nome, LocalDate dataDeNascimento, String descricao, Atribuicao funcao) {
         super(id, nome, dataDeNascimento);
+        this.id = id;
         this.descricao = descricao;
         this.funcao = funcao;
     }
@@ -39,5 +40,14 @@ public class Produtor extends Pessoa {
 
     public String getDescricao() {
         return descricao;
+    }
+
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setFuncao(Atribuicao funcao) {
+        this.funcao = funcao;
     }
 }

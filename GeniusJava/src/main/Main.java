@@ -5,8 +5,14 @@ import model.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Main {
+public class Main  {
+
     public static void main(String[] args) {
+        iniciarGeniusJava();
+        MainFrame frame = new MainFrame("GeniusJava");
+    }
+
+    public static void iniciarGeniusJava(){
         // Única instancia do objeto PortalDeMusica
         PortalDeMusica bd = PortalDeMusica.getInstance();
 
@@ -19,62 +25,58 @@ public class Main {
                                 "Taylor Swift",
                                 LocalDate.now(),
                                 "A loirinha manda muito",
-                                generoMusical));
-        System.out.println(genero.get());
+                                "pop"));
 
         // recupera artista pelo nome
-        var artista = bd.getArtistaPeloNome("Taylor Swift");
-        System.out.println(artista.get().getInfoArtista());
+        var artista = bd.getArtistasPeloNome("Taylor Swift");
 
         // cadastra produtor e recupera pelo nome
-        bd.cadastrarProdutor("Shellback", LocalDate.now(), "Karl Johan Schuster, known famously as Shellback, is a Swedish songwriter, record producer, and musician.", Atribuicao.Executivo);
-        var produtor = bd.getProdutorPeloNome("Shellback");
-        System.out.println(produtor.get().getInfoProdutor());
+        bd.cadastrarProdutor("Shellback", LocalDate.now(), "Karl Johan Schuster, known famously as Shellback, is a Swedish songwriter, record producer, and musician.", Atribuicao.EXECUTIVO);
+        bd.cadastrarProdutor("metro", LocalDate.now(), "Karl Johan Schuster, known famously as Shellback, is a Swedish songwriter, record producer, and musician.", Atribuicao.EXECUTIVO);
+        var produtor = bd.getProdutoresPeloNome("Shellback");
 
 
         // cadastra música
-        ArrayList<Artista> artistas = new ArrayList<>();
-        artistas.add(artista.get());
-        ArrayList<Produtor> produtores = new ArrayList<>();
-        produtores.add(produtor.get());
+        ArrayList<Artista> artistas = new ArrayList<>(artista);
+        ArrayList<Produtor> produtores = new ArrayList<>(produtor);
 
-        bd.cadastrarMusica("Shake it off", genero.get(), "\n" +
-                        "I stay out too late\n" +
-                        "Got nothing in my brain\n" +
-                        "That's what people say\n" +
-                        "That's what people say\n" +
-                        "I go on too many dates\n" +
-                        "But I can't make them stay\n" +
-                        "At least that's what people say\n" +
-                        "That's what people say\n" +
-                        "But I keep cruising\n" +
-                        "Can't stop, won't stop moving\n" +
-                        "It's like I got this music in my mind\n" +
-                        "Saying it's gonna be alright\n" +
-                        "I never miss a beat\n" +
-                        "I'm lightning on my feet\n" +
-                        "And that's what they don't see\n" +
-                        "That's what they don't see\n" +
-                        "Players gonna play, play, play, play, play\n" +
-                        "And the haters gonna hate, hate, hate, hate, hate (haters gonna hate)\n" +
-                        "Baby, I'm just gonna shake, shake, shake, shake, shake\n" +
-                        "I shake it off, I shake it off\n" +
-                        "Heartbreakers gonna break\n" +
-                        "Fakers gonna fake\n" +
-                        "I'm just gonna shake\n" +
-                        "I shake it off, I shake it off\n" +
-                        "I shake it off, I shake it off\n" +
-                        "I, I, I shake it off, I shake it off\n" +
-                        "I, I, I shake it off, shake it off\n" +
-                        "I, I, I shake it off, I shake it off\n" +
-                        "I, I, I shake it off, I shake it off\n" +
-                        "I, I, I shake it off, I shake it off\n" +
-                        "I, I, I, shake it off, I shake it off\n" +
-                        "I, I, I, shake it off, I shake it off",
+        bd.cadastrarMusica("Shake it off", genero.get(), """
+
+                        I stay out too late
+                        Got nothing in my brain
+                        That's what people say
+                        That's what people say
+                        I go on too many dates
+                        But I can't make them stay
+                        At least that's what people say
+                        That's what people say
+                        But I keep cruising
+                        Can't stop, won't stop moving
+                        It's like I got this music in my mind
+                        Saying it's gonna be alright
+                        I never miss a beat
+                        I'm lightning on my feet
+                        And that's what they don't see
+                        That's what they don't see
+                        Players gonna play, play, play, play, play
+                        And the haters gonna hate, hate, hate, hate, hate (haters gonna hate)
+                        Baby, I'm just gonna shake, shake, shake, shake, shake
+                        I shake it off, I shake it off
+                        Heartbreakers gonna break
+                        Fakers gonna fake
+                        I'm just gonna shake
+                        I shake it off, I shake it off
+                        I shake it off, I shake it off
+                        I, I, I shake it off, I shake it off
+                        I, I, I shake it off, shake it off
+                        I, I, I shake it off, I shake it off
+                        I, I, I shake it off, I shake it off
+                        I, I, I shake it off, I shake it off
+                        I, I, I, shake it off, I shake it off
+                        I, I, I, shake it off, I shake it off""",
                 artistas,
                 produtores);
         var musica = bd.getMusicaPeloNome("Shake it off");
-        System.out.println(musica.get().getMusicaInfo());
 
         var musicas = new ArrayList<Musica>();
         musicas.add(musica.get());
@@ -82,6 +84,6 @@ public class Main {
         // cadastra album e recupera pelo nome
         bd.cadastrarAlbum("1989", LocalDate.now(), musicas);
         var album = bd.getAlbumPeloNome("1989");
-        System.out.println(album.get().getAlbumInfo());
     }
+
 }
