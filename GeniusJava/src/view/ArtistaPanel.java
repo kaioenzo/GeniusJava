@@ -5,14 +5,15 @@ import model.Artista;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
+import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 /**
  * Classe principal de artista, onde lista-se os artistas e possibilita a sua criação, exclusão, edição e detalhamento.
  */
-public class ArtistaPanel extends BasePessoaPanel<Artista> {
+public class ArtistaPanel extends BasePanel<Artista> {
 
 
     final String[] columnNames = {"Id", "Artista", "Gênero", "Data de Nascimento"};
@@ -95,79 +96,86 @@ public class ArtistaPanel extends BasePessoaPanel<Artista> {
                     null,
                     null,
                     nome);
+            if(nome == null){
+                return;
+            }
             if (nome.isBlank()) {
                 showJOptionPaneMessage("Nome não pode ser vazio!", "Erro na criação de artista", "artista");
-            } else {
-                genero = (String) JOptionPane.showInputDialog(
-                        this,
-                        "Insira o gênero musical do artista:",
-                        "Criação de artista",
-                        JOptionPane.PLAIN_MESSAGE,
-                        null,
-                        null,
-                        genero);
-                if (genero.isBlank()) {
-                    showJOptionPaneMessage("Gênero não pode ser vazio!", "Erro na criação de artista", "artista");
-                } else {
-                    while (!dataNascimentoValida) {
-                        dataDeNascimento = (String) JOptionPane.showInputDialog(
-                                this,
-                                "Insira a data de nascimento do artista no formato  dd/mm/yyyy:",
-                                "Criação de artista",
-                                JOptionPane.PLAIN_MESSAGE,
-                                null,
-                                null,
-                                dataDeNascimento);
-                        if (dataDeNascimento.isBlank()) {
-                            showJOptionPaneMessage("Data de nascimento não pode ser vazio!", "Erro na criação de artista", "artista");
+                return;
+            }
 
-                        } else {
-                            try {
-                                // tenta parsear a data
-                                LocalDate.parse(dataDeNascimento, controller.formatter());
-                                dataNascimentoValida = true;
+            genero = (String) JOptionPane.showInputDialog(
+                    this,
+                    "Insira o gênero musical do artista:",
+                    "Criação de artista",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    genero);
+            if(genero ==  null){
+                return;
+            }
+            if (genero.isBlank()) {
+                showJOptionPaneMessage("Gênero não pode ser vazio!", "Erro na criação de artista", "artista");
+                return;
+            }
 
-                            } catch (DateTimeParseException e) {
-                                showJOptionPaneMessage("Data inválida", "Erro na criação de artista", "artista");
-
-                            }
-                        }
+            while (!dataNascimentoValida) {
+                try {
+                    MaskFormatter dateMask = new MaskFormatter("##/##/####");
+                    dateMask.setPlaceholderCharacter('_');
+                    JFormattedTextField dateField = new JFormattedTextField(dateMask);
+                    dateField.setValue(dataDeNascimento);
+                    JPanel panel = new JPanel();
+                    panel.add(new JLabel("Insira a data de nascimento do artista:"));
+                    panel.add(dateField);
+                    int resultDialog = JOptionPane.showConfirmDialog(null, panel, "Criação de artista",
+                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                    if (resultDialog == JOptionPane.OK_OPTION) {
+                        dataDeNascimento = dateField.getText();
+                        dataNascimentoValida = true;
                     }
-                    descricao = (String) JOptionPane.showInputDialog(
-                            this,
-                            "Insira a descrição do artista:",
-                            "Criação de artista",
-                            JOptionPane.PLAIN_MESSAGE,
-                            null,
-                            null,
-                            descricao);
-                    if (descricao.isBlank()) {
-                        showJOptionPaneMessage("Descricão não pode ser vazio!", "Erro na criação de artista", "artista");
-                    } else {
-                        date = LocalDate.parse(dataDeNascimento, controller.formatter());
-                        if (editar) {
-                            id = Integer.parseInt(model.getValueAt(selectedRow, 0).toString());
-
-                            controller.editar(id, new Artista(id, nome, date, descricao, genero));
-                            var artista = controller.get(id);
-
-                            model.setValueAt(artista.getNome(), selectedRow, 1);
-                            model.setValueAt(artista.getGeneroMusical(), selectedRow, 2);
-                            model.setValueAt(artista.getDataDeNascimento().format(controller.formatter()), selectedRow, 3);
-                            table.repaint();
-                        } else {
-                            id = controller.getProximoId();
-                            controller.adicionar(new Artista(id, nome, date, descricao, genero));
-                            var artista = controller.get(id);
-                            model.addRow(
-                                    new Object[]{
-                                            artista.getId(),
-                                            artista.getNome(),
-                                            artista.getGeneroMusical(),
-                                            artista.getDataDeNascimentoFormatada()});
-                        }
-                    }
+                } catch (ParseException e) {
+                    JOptionPane.showMessageDialog(null, "Error parsing date", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+            descricao = (String) JOptionPane.showInputDialog(
+                    this,
+                    "Insira a descrição do artista:",
+                    "Criação de artista",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    descricao);
+            if(descricao == null){
+                return;
+            }
+            if (descricao.isBlank()) {
+                showJOptionPaneMessage("Descricão não pode ser vazio!", "Erro na criação de artista", "artista");
+                return;
+            }
+
+            date = LocalDate.parse(dataDeNascimento, controller.formatter());
+            if (editar) {
+                id = Integer.parseInt(model.getValueAt(selectedRow, 0).toString());
+
+                controller.editar(id, new Artista(id, nome, date, descricao, genero));
+                var artista = controller.get(id);
+
+                model.setValueAt(artista.getNome(), selectedRow, 1);
+                model.setValueAt(artista.getGeneroMusical(), selectedRow, 2);
+                model.setValueAt(artista.getDataDeNascimento().format(controller.formatter()), selectedRow, 3);
+                table.repaint();
+            } else {
+                id = controller.getProximoId();
+                controller.adicionar(new Artista(id, nome, date, descricao, genero));
+                var artista = controller.get(id);
+                model.addRow(
+                        new Object[]{
+                                artista.getId(),
+                                artista.getNome(),
+                                artista.getGeneroMusical(),
+                                artista.getDataDeNascimentoFormatada()});
             }
 
         }
@@ -180,7 +188,7 @@ public class ArtistaPanel extends BasePessoaPanel<Artista> {
     @Override
     protected void pesquisar(String text) {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        var artistasList = controller.getListaPeloNome(text);
+        var artistasList = controller.get(text);
         if (!artistasList.isEmpty()) {
             table.setModel(model);
             for (Artista artista : artistasList) {

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ArtistasController implements PessoaBaseController<Artista> {
+public class ArtistasController implements BaseController<Artista> {
     /**
      * @return Lista de todos os artistas
      */
@@ -37,16 +37,16 @@ public class ArtistasController implements PessoaBaseController<Artista> {
     }
 
     /**
-     * @param id do artista que será editado
-     * @param pessoaAtualizada objeto com informações da edição
+     * @param id             do artista que será editado
+     * @param infoAtualizada objeto com informações da edição
      */
     @Override
-    public void editar(int id, Artista pessoaAtualizada) {
+    public void editar(int id, Artista infoAtualizada) {
         var artista = get(id);
-        artista.setNome(pessoaAtualizada.getNome());
-        artista.setDataDeNascimento(LocalDate.parse(pessoaAtualizada.getDataDeNascimentoFormatada(), formatter()));
-        artista.setGeneroMusical(pessoaAtualizada.getGeneroMusical());
-        artista.setDescricao(pessoaAtualizada.getDescricao());
+        artista.setNome(infoAtualizada.getNome());
+        artista.setDataDeNascimento(LocalDate.parse(infoAtualizada.getDataDeNascimentoFormatada(), formatter()));
+        artista.setGeneroMusical(infoAtualizada.getGeneroMusical());
+        artista.setDescricao(infoAtualizada.getDescricao());
     }
 
 
@@ -64,7 +64,7 @@ public class ArtistasController implements PessoaBaseController<Artista> {
      * @return retorna lista de artistas com o nome pesquisado
      */
     @Override
-    public List<Artista> getListaPeloNome(String nome) {
+    public List<Artista> get(String nome) {
         return bd.getArtistasPeloNome(nome);
     }
 
@@ -81,12 +81,13 @@ public class ArtistasController implements PessoaBaseController<Artista> {
      * @return lista de musicas associadas aquele artista
      */
     @Override
-    public List<Musica> getMusicas(int id) {
-        var musicas = bd.getAllMusicas();
+    public List<Musica> getMusicasAssociadas(int id) {
+        var musicasController = new MusicaController();
+        var musicas = musicasController.get();
         List<Musica> musicasFiltradas = new ArrayList<>();
 
         for (Musica musica : musicas) {
-            for(Artista artist: musica.getArtistas()){
+            for (Artista artist : musica.getArtistas()) {
                 if (artist.getId() == id) {
                     musicasFiltradas.add(musica);
                     break;

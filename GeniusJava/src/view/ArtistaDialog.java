@@ -4,7 +4,7 @@ import controller.ArtistasController;
 import model.Artista;
 
 
-public class ArtistaDialog extends BasePessoaDialog<Artista> {
+public class ArtistaDialog extends BaseDialog<Artista> {
     public ArtistaDialog(
             ArtistasController controller,
             int id, String nome,
@@ -15,7 +15,8 @@ public class ArtistaDialog extends BasePessoaDialog<Artista> {
                 id,
                 nome,
                 dataDeNascimento,
-                descricao
+                descricao,
+                "nascimento"
         );
         super.setColumnNames(this.columnNames);
     }
