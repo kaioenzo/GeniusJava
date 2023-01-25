@@ -1,20 +1,20 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class Musica {
     private int id;
     private String nome;
-    private HashSet<GeneroMusical> generos;
+    private HashSet<String> generos;
     private String letra;
-
     private HashSet<Artista> artistas;
     private HashSet<Produtor> produtores;
+    private boolean fazParteAlbum;
 
 
-    public Musica(int id, String nome, HashSet<GeneroMusical> generos, String letra, HashSet<Artista> artistas, HashSet<Produtor> produtores) {
+    public Musica(int id, String nome, HashSet<String> generos, String letra, HashSet<Artista> artistas, HashSet<Produtor> produtores) {
         this.id = id;
         this.nome = nome;
         this.generos = generos;
@@ -31,8 +31,9 @@ public class Musica {
         return nome;
     }
 
-    public HashSet<GeneroMusical> getGeneros() {
-        return generos;
+    public List
+            <String> getGeneros() {
+        return generos.stream().toList();
     }
 
     public String getLetra() {
@@ -47,22 +48,32 @@ public class Musica {
         return produtores.stream().toList();
     }
 
-    public void AdicionarArtistas(ArrayList<Artista> artistas){
+    public void adicionarArtistas(List<Artista> artistas) {
+        this.artistas.clear();
         this.artistas.addAll(artistas);
     }
-    public void AdicionarProdutores(ArrayList<Produtor> produtores){
+
+    public void adicionarProdutores(List<Produtor> produtores) {
+
+        this.produtores.clear();
         this.produtores.addAll(produtores);
     }
-    public void AdicionarGenerosMusicais(ArrayList<GeneroMusical> generos){
+
+    public void adicionargenerosmusicais(List<String> generos) {
+
+        this.generos.clear();
         this.generos.addAll(generos);
     }
-    public void deletarArtista(Artista artista){
+
+    public void deletarArtista(Artista artista) {
         artistas.remove(artista);
     }
-    public void deletarGeneroMusical(GeneroMusical genero){
+
+    public void deletarGeneroMusical(String genero) {
         generos.remove(genero);
     }
-    public void deletarProdutor(Produtor produtor){
+
+    public void deletarProdutor(Produtor produtor) {
         produtores.remove(produtor);
     }
 
@@ -89,6 +100,46 @@ public class Musica {
                 ", artistas=" + artistas +
                 ", produtores=" + produtores +
                 '}';
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setGeneros(HashSet<String> generos) {
+        this.generos = generos;
+    }
+
+    public void setLetra(String letra) {
+        this.letra = letra;
+    }
+
+    public void setArtistas(HashSet<Artista> artistas) {
+        this.artistas = artistas;
+    }
+
+    public void setProdutores(HashSet<Produtor> produtores) {
+        this.produtores = produtores;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Musica musica)) return false;
+        return id == musica.id && nome.equals(musica.nome) && generos.equals(musica.generos) && letra.equals(musica.letra) && artistas.equals(musica.artistas) && produtores.equals(musica.produtores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, generos, letra, artistas, produtores);
+    }
+
+    public boolean getFazParteAlbum() {
+        return fazParteAlbum;
+    }
+
+    public void setFazParteAlbum(boolean fazParteAlbum) {
+        this.fazParteAlbum = fazParteAlbum;
     }
 }
 
