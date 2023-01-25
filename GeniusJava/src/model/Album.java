@@ -17,9 +17,6 @@ public class Album {
         this.musicas = musica;
     }
 
-    public Album() {
-    }
-
     public int getId() {
         return id;
     }
@@ -45,12 +42,15 @@ public class Album {
                 ", musica=" + musicas +
                 '}';
     }
-    public void adicionarMusica(Musica musica){
+
+    public void adicionarMusica(Musica musica) {
         musicas.add(musica);
     }
-    public void deletarMusica(Musica muisca){
+
+    public void deletarMusica(Musica muisca) {
         musicas.remove(muisca);
     }
+
     public List<Artista> getArtistas() {
         List<Artista> artistasList = new ArrayList<>();
         musicas.forEach(m -> artistasList.addAll(m.getArtistas()));
@@ -58,8 +58,29 @@ public class Album {
     }
 
     public List<Produtor> getProdutores() {
-        List<Produtor> produtoresList =  new ArrayList<>();
+        List<Produtor> produtoresList = new ArrayList<>();
         musicas.forEach(m -> produtoresList.addAll(m.getProdutores()));
         return produtoresList;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDataDeLancamento(LocalDate dataDeLancamento) {
+        this.dataDeLancamento = dataDeLancamento;
+    }
+
+    public void setMusicas(ArrayList<Musica> musicas) {
+        this.musicas.clear();
+        this.musicas.addAll(musicas);
+    }
+
+    /**
+     * Este método remove uma música de um álbum.
+     * @param musica a ser removida do álbum
+     */
+    public void removerMusica(Musica musica){
+        musicas.remove(musica);
     }
 }

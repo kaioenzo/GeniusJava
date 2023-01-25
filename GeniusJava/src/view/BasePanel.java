@@ -1,7 +1,6 @@
 package view;
 
-import controller.PessoaBaseController;
-import model.Produtor;
+import controller.BaseController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -9,11 +8,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Classe base para a criação do JPanel que apresenta as informações de artistas, produtores, álbums e músicas.
+ *
  * @param <K> generic que possibilita esse classe ser extendida tanto por ArtistaPanel como por ProdutorPanl
- * Classe base para o CRUD de Artistas e Produtores.
  */
-public abstract class BasePessoaPanel<K> extends JPanel {
-    protected PessoaBaseController<K> controller;
+public abstract class BasePanel<K> extends JPanel {
+    protected BaseController<K> controller;
     final JButton adicionarBtn = new JButton("Adicionar");
     final JButton visualizarBtn = new JButton("Visualizar");
     final JButton editarBtn = new JButton("Editar");
@@ -26,7 +26,7 @@ public abstract class BasePessoaPanel<K> extends JPanel {
 
     protected String[] columnNames = {};
 
-    public BasePessoaPanel(PessoaBaseController<K> controller) {
+    public BasePanel(BaseController<K> controller) {
         this.controller = controller;
         setVisible(true);
     }
@@ -53,16 +53,14 @@ public abstract class BasePessoaPanel<K> extends JPanel {
             }
         });
 
-
         table.setModel(popularDados());
         table.setBounds(40, 40, 200, 300);
-
+        table.setDragEnabled(false);
         table.setAlignmentX(CENTER_ALIGNMENT);
         table.setDefaultEditor(Object.class, null);
 
         JScrollPane jScrollPane1 = new JScrollPane(table);
         add(jScrollPane1);
-
 
         excluirBtn.addActionListener(e -> excluir());
         visualizarBtn.addActionListener(e -> visualizar());
@@ -83,7 +81,6 @@ public abstract class BasePessoaPanel<K> extends JPanel {
         excluirBtn.setAlignmentY(CENTER_ALIGNMENT);
         buttonsPanel.add(excluirBtn);
 
-
         add(buttonsPanel);
     }
 
@@ -91,7 +88,7 @@ public abstract class BasePessoaPanel<K> extends JPanel {
 
     abstract protected void alterarDados(boolean editar);
 
-    protected void excluir(){
+    protected void excluir() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int selectedRow = table.getSelectedRow();
 
@@ -100,7 +97,8 @@ public abstract class BasePessoaPanel<K> extends JPanel {
             controller.excluir(id);
             model.removeRow(selectedRow);
             popularDados();
-        } else {
+        }
+        else {
             JOptionPane.showMessageDialog(
                     this,
                     "Selecione uma linha para deletar!",
@@ -113,12 +111,12 @@ public abstract class BasePessoaPanel<K> extends JPanel {
 
     abstract protected DefaultTableModel popularDados();
 
-     protected void showJOptionPaneMessage(String message, String title, String className){
+    protected void showJOptionPaneMessage(String message, String title, String className) {
 
-         JOptionPane.showMessageDialog(
-                 this,
-                 message,
-                 title,
-                 JOptionPane.INFORMATION_MESSAGE);
-     };
+        JOptionPane.showMessageDialog(
+                this,
+                message,
+                title,
+                JOptionPane.INFORMATION_MESSAGE);
+    }
 }

@@ -1,39 +1,41 @@
 package view;
 
-import controller.PessoaBaseController;
+import controller.BaseController;
 import model.Musica;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public abstract class BasePessoaDialog<K> extends JDialog {
+public abstract class BaseDialog<K> extends JDialog {
     private JLabel nome;
     private JLabel dataDeNascimento;
     private JTextArea labelEspecial;
     private JTable table;
 
+    private String dataLabel;
+
     protected String[] columnNames = {"Id", "Musica"};
     private int id;
-    private PessoaBaseController<K> controller;
+    private BaseController<K> controller;
 
-    public BasePessoaDialog(
-            PessoaBaseController<K> controller,
-
+    public BaseDialog(
+            BaseController<K> controller,
             int id, String nome,
             String dataDeNascimento,
-            String descricao) {
+            String descricao,
+            String dataLabel) {
         setTitle("Informações de: " + nome);
         this.nome = new JLabel(nome);
         this.dataDeNascimento = new JLabel(dataDeNascimento);
         this.labelEspecial = new JTextArea(descricao);
         this.controller = controller;
+        this.dataLabel = dataLabel;
         this.id = id;
 
         setUpLayout();
-
-        this.pack();
-        this.setVisible(true);
+        pack();
+        setVisible(true);
     }
 
     private void setUpLayout() {
@@ -52,23 +54,20 @@ public abstract class BasePessoaDialog<K> extends JDialog {
         add(nome, constraints);
 
 
-        // Data de nascimento
-
-        constraints.gridx = 1;
-        constraints.gridy = 1;
-        add(labelEspecial, constraints);
-
-        JLabel birthDateLabel = new JLabel("Data de nascimento:");
+        // Data
+        JLabel birthDateLabel = new JLabel("Data de "+dataLabel +":");
         constraints.gridx = 0;
         constraints.gridy = 2;
         add(birthDateLabel, constraints);
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        add(labelEspecial, constraints);
 
         // especial label
         JLabel especialLabel = new JLabel("Descrição");
         constraints.gridx = 0;
         constraints.gridy = 1;
         add(especialLabel, constraints);
-
 
         constraints.gridx = 1;
         constraints.gridy = 2;
@@ -82,15 +81,15 @@ public abstract class BasePessoaDialog<K> extends JDialog {
 
         JScrollPane scrollPane = new JScrollPane(table);
         constraints.gridx = 0;
-        constraints.gridy = 3;
+        constraints.gridy = 4;
         constraints.gridwidth = 2;
         add(scrollPane, constraints);
 
     }
 
-    DefaultTableModel popularDados() {
+    protected DefaultTableModel popularDados() {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        var list = controller.getMusicas(id);
+        var list = controller.getMusicasAssociadas(id);
 
         if (list == null || list.isEmpty()) {
             JOptionPane.showMessageDialog(
@@ -137,7 +136,7 @@ public abstract class BasePessoaDialog<K> extends JDialog {
         this.id = id;
     }
 
-    public void setController(PessoaBaseController<K> controller) {
+    public void setController(BaseController<K> controller) {
         this.controller = controller;
     }
 }
