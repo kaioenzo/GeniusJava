@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProdutorController implements PessoaBaseController<Produtor> {
+public class ProdutorController implements BaseController<Produtor> {
 
     /**
      * @return Lista com todos os produtores
@@ -39,15 +39,15 @@ public class ProdutorController implements PessoaBaseController<Produtor> {
 
     /**
      * @param id do produtor
-     * @param pessoaAtualizada info atualizada do produtor
+     * @param infoAtualizada info atualizada do produtor
      */
     @Override
-    public void editar(int id, Produtor pessoaAtualizada) {
+    public void editar(int id, Produtor infoAtualizada) {
         var produtor = get(id);
-        produtor.setNome(pessoaAtualizada.getNome());
-        produtor.setDataDeNascimento(LocalDate.parse(pessoaAtualizada.getDataDeNascimentoFormatada(), formatter()));
-        produtor.setFuncao(pessoaAtualizada.getFuncao());
-        produtor.setDescricao(pessoaAtualizada.getDescricao());
+        produtor.setNome(infoAtualizada.getNome());
+        produtor.setDataDeNascimento(LocalDate.parse(infoAtualizada.getDataDeNascimentoFormatada(), formatter()));
+        produtor.setFuncao(infoAtualizada.getFuncao());
+        produtor.setDescricao(infoAtualizada.getDescricao());
     }
 
     /**
@@ -64,7 +64,7 @@ public class ProdutorController implements PessoaBaseController<Produtor> {
      * @return lista de produtores com o nome pesquisado
      */
     @Override
-    public List<Produtor> getListaPeloNome(String nome) {
+    public List<Produtor> get(String nome) {
         return bd.getProdutoresPeloNome(nome);
     }
 
@@ -81,7 +81,7 @@ public class ProdutorController implements PessoaBaseController<Produtor> {
      * @return lista de musicas que aquele produtor participa
      */
     @Override
-    public List<Musica> getMusicas(int id) {
+    public List<Musica> getMusicasAssociadas(int id) {
         var musicas = bd.getAllMusicas();
         List<Musica> musicasFiltradas = new ArrayList<>();
 

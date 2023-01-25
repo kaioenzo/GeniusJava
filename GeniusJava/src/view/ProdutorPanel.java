@@ -6,13 +6,16 @@ import model.Produtor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
+import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
-public class ProdutorPanel extends BasePessoaPanel<Produtor> {
+public class ProdutorPanel extends BasePanel<Produtor> {
     final String[] columnNames = {"Id", "Produtor", "Função", "Data de Nascimento"};
+    final String[] produtorFuncoes = {"EXECUTIVO", "ENGENHEIRO DE MIXAGEM", "ENGENHEIRO DE SOM", "EDITOR", "VOCAL"};
     private boolean dialogIsOpen;
     private ProdutorDialog produtorDialog;
+
     public ProdutorPanel() {
         super(new ProdutorController());
         super.columnNames = this.columnNames;
@@ -32,18 +35,20 @@ public class ProdutorPanel extends BasePessoaPanel<Produtor> {
             String dataDeNascimento = model.getValueAt(selectedRow, 3).toString();
             String descricao = controller.get(Integer.parseInt(model.getValueAt(selectedRow, 0).toString())).getDescricao();
 
-            if(!dialogIsOpen){
-                produtorDialog = new ProdutorDialog(controller, id, nome, dataDeNascimento,descricao);
+            if (!dialogIsOpen) {
+                produtorDialog = new ProdutorDialog(controller, id, nome, dataDeNascimento, descricao);
                 dialogIsOpen = true;
-            } else {
+            }
+            else {
                 produtorDialog.setVisible(false);
-                produtorDialog = new ProdutorDialog(controller, id, nome, dataDeNascimento,descricao );
+                produtorDialog = new ProdutorDialog(controller, id, nome, dataDeNascimento, descricao);
                 dialogIsOpen = true;
                 produtorDialog.setVisible(true);
                 produtorDialog.toFront();
             }
 
-        } else {
+        }
+        else {
             showJOptionPaneMessage("Selecione um artista para visualizar", "Erro ao visualizar artista", "artista");
         }
     }
@@ -57,20 +62,20 @@ public class ProdutorPanel extends BasePessoaPanel<Produtor> {
         int selectedRow = table.getSelectedRow();
         boolean dataNascimentoValida = false;
         int id;
-        LocalDate date;
+        LocalDate dataNascimento;
         String nome = null;
-        String funcao = null;
-        String dataDeNascimento = null;
+        String funcao;
+        String stringDataNascimento = null;
         String descricao = null;
-
 
         if (editar && selectedRow != -1) {
             nome = model.getValueAt(selectedRow, 1).toString();
             funcao = model.getValueAt(selectedRow, 2).toString();
-            dataDeNascimento = model.getValueAt(selectedRow, 3).toString();
+            stringDataNascimento = model.getValueAt(selectedRow, 3).toString();
             descricao = controller.get(Integer.parseInt(model.getValueAt(selectedRow, 0).toString())).getDescricao();
 
-        } else if (editar && selectedRow == -1) {
+        }
+        else if (editar && selectedRow == -1) {
             JOptionPane.showMessageDialog(
                     this,
                     "Selecione uma linha para deletar!",
@@ -86,59 +91,60 @@ public class ProdutorPanel extends BasePessoaPanel<Produtor> {
                 null,
                 null,
                 nome);
-        if (nome.isBlank()) {
-            showJOptionPaneMessage("Nome não pode ser vazio!", "Erro na criação de produtor", "produtor");
+        if (nome == null) {
             return;
         }
-        JComboBox<String> funcaoBox = new JComboBox<>();
-        funcaoBox.addItem("EXECUTIVO");
-        funcaoBox.addItem("ENGENHEIRO DE MIXAGEM");
-        funcaoBox.addItem("ENGENHEIRO DE SOM");
-        funcaoBox.addItem("EDITOR");
-        funcaoBox.addItem("VOCAL");
-        funcaoBox.setSelectedIndex(0);
-
-        Object result = JOptionPane.showInputDialog(
-                this,
-                "Insira o gênero musical do artista:",
-                "Criação de artista", JOptionPane.PLAIN_MESSAGE,
-                null,
-                new String[] {"EXECUTIVO","ENGENHEIRO DE MIXAGEM","ENGENHEIRO DE SOM","EDITOR","VOCAL"},
-                funcaoBox);
-
-
-        if (result != null) {
-            funcao = (String) result;
+        if (nome.isBlank()) {
+            showJOptionPaneMessage("Nome do produtor não pode ser vazio!", "Erro na criação de produtor", "produtor");
+            return;
         }
 
-        if (funcao != null && funcao.isBlank()) {
+        JComboBox<String> funcaoBox = new JComboBox<>();
+        for (String produtorFuncoe : produtorFuncoes) {
+            funcaoBox.addItem(produtorFuncoe);
+        }
+        funcaoBox.setSelectedIndex(0);
+
+         funcao = (String) JOptionPane.showInputDialog(
+                this,
+                "Insira o gênero musical do produtor:",
+                "Criação de produtor",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                produtorFuncoes,
+                funcaoBox);
+
+        if (funcao == null) {
+            return;
+        }
+        if (funcao.isBlank()) {
             showJOptionPaneMessage("Função não pode ser vazio!", "Erro na criação de produtor", "produtor");
             return;
         }
 
         while (!dataNascimentoValida) {
-            dataDeNascimento = (String) JOptionPane.showInputDialog(
-                    this,
-                    "Insira a data de nascimento do produtor no formato  dd/mm/yyyy:",
-                    "Criação de produtor",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    dataDeNascimento);
-            if (dataDeNascimento.isBlank()) {
-                showJOptionPaneMessage("Data de nascimento não pode ser vazio!", "Erro na criação de produtor", "produtor");
-
-            }
             try {
-                // tenta parsear a data
-                LocalDate.parse(dataDeNascimento, controller.formatter());
-                dataNascimentoValida = true;
-
-            } catch (DateTimeParseException e) {
-                showJOptionPaneMessage("Data inválida", "Erro na criação de produtor", "produtor");
-
+                MaskFormatter dateMask = new MaskFormatter("##/##/####");
+                dateMask.setPlaceholderCharacter('_');
+                JFormattedTextField dateField = new JFormattedTextField(dateMask);
+                dateField.setValue(stringDataNascimento);
+                JPanel panel = new JPanel();
+                panel.add(new JLabel("Insira a data de nascimento do produtor:"));
+                panel.add(dateField);
+                int resultDialog = JOptionPane.showConfirmDialog(null, panel, "Criação de produtor",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if (resultDialog == JOptionPane.OK_OPTION) {
+                    stringDataNascimento = dateField.getText();
+                    dataNascimentoValida = true;
+                }
+                else {
+                    return;
+                }
+            } catch (ParseException e) {
+                JOptionPane.showMessageDialog(null, "Error parsing date", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+
         descricao = (String) JOptionPane.showInputDialog(
                 this,
                 "Insira a descrição do produtor:",
@@ -147,24 +153,29 @@ public class ProdutorPanel extends BasePessoaPanel<Produtor> {
                 null,
                 null,
                 descricao);
+        if (descricao == null) {
+            return;
+        }
         if (descricao.isBlank()) {
             showJOptionPaneMessage("Descricão não pode ser vazio!", "Erro na criação de produtor", "produtor");
+            return;
         }
-        date = LocalDate.parse(dataDeNascimento, controller.formatter());
+
+        dataNascimento = LocalDate.parse(stringDataNascimento, controller.formatter());
         if (editar) {
             id = Integer.parseInt(model.getValueAt(selectedRow, 0).toString());
 
-            controller.editar(id, new Produtor(id, nome, date, descricao, Atribuicao.valueOf(funcao)));
+            controller.editar(id, new Produtor(id, nome, dataNascimento, descricao, Atribuicao.valueOf(funcao)));
             var produtor = controller.get(id);
 
             model.setValueAt(produtor.getNome(), selectedRow, 1);
             model.setValueAt(produtor.getFuncao(), selectedRow, 2);
             model.setValueAt(produtor.getDataDeNascimento().format(controller.formatter()), selectedRow, 3);
             table.repaint();
-        } else {
+        }
+        else {
             id = controller.getProximoId();
-            System.out.println(id);
-            super.controller.adicionar(new Produtor(id, nome, date, descricao, Atribuicao.valueOf(funcao)));
+            super.controller.adicionar(new Produtor(id, nome, dataNascimento, descricao, Atribuicao.valueOf(funcao)));
             var produtor = controller.get(id);
             model.addRow(
                     new Object[]{
@@ -175,14 +186,13 @@ public class ProdutorPanel extends BasePessoaPanel<Produtor> {
         }
     }
 
-
     /**
      * @param text da pesquisa de produtores
      */
     @Override
     protected void pesquisar(String text) {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        var artistasList = controller.getListaPeloNome(text);
+        var artistasList = controller.get(text);
         if (!artistasList.isEmpty()) {
             table.setModel(model);
             for (Produtor produtor : artistasList) {
