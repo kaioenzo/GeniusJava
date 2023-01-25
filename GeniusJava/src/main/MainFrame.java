@@ -10,6 +10,7 @@ import view.AlbumsPanel;
 import view.ArtistaPanel;
 import view.MusicasPanel;
 import view.ProdutorPanel;
+import view.components.RoundedButtonMenu;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -31,10 +32,10 @@ public class MainFrame extends JFrame {
     final ProdutorPanel produtoresPanel = new ProdutorPanel();
     final AlbumsPanel albumsPanel = new AlbumsPanel();
     final CardLayout cl = new CardLayout();
-    final JButton musicasButton = new JButton("Músicas");
-    final JButton artistasButton = new JButton("Artistas");
-    final JButton albumsButton = new JButton("Álbums");
-    final JButton produtoreButton = new JButton("Produtores");
+    final JButton musicasButton = new RoundedButtonMenu("Músicas");
+    final JButton artistasButton = new RoundedButtonMenu("Artistas");
+    final JButton albumsButton = new RoundedButtonMenu("Álbums");
+    final JButton produtoreButton = new RoundedButtonMenu("Produtores");
 
     public MainFrame(String titulo) {
         super(titulo);

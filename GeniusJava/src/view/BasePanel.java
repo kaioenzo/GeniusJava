@@ -1,6 +1,7 @@
 package view;
 
 import controller.BaseController;
+import view.components.RoundedButtonPanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -14,10 +15,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public abstract class BasePanel<K> extends JPanel {
     protected BaseController<K> controller;
-    final JButton adicionarBtn = new JButton("Adicionar");
-    final JButton visualizarBtn = new JButton("Visualizar");
-    final JButton editarBtn = new JButton("Editar");
-    final JButton excluirBtn = new JButton("Exlcuir");
+    final JButton adicionarBtn = new RoundedButtonPanel("Adicionar");
+    final JButton visualizarBtn = new RoundedButtonPanel("Visualizar");
+    final JButton editarBtn = new RoundedButtonPanel("Editar");
+    final JButton excluirBtn = new RoundedButtonPanel("Exlcuir");
     JTextField textField = new JTextField(20);
     final JTable table = new JTable();
     final JPanel searchPanel = new JPanel();
