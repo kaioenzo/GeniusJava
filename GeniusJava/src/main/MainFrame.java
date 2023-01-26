@@ -23,6 +23,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+/**
+ * Classe de entrada para o programa, onde a ‘interface’ é carregada e os dados iniciais são cadastrados.
+ *
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ */
 public class MainFrame extends JFrame {
 
     final JPanel menuPanel = new JPanel();
@@ -34,7 +40,7 @@ public class MainFrame extends JFrame {
     final CardLayout cl = new CardLayout();
     final JButton musicasButton = new RoundedButtonMenu("Músicas");
     final JButton artistasButton = new RoundedButtonMenu("Artistas");
-    final JButton albumsButton = new RoundedButtonMenu("Álbums");
+    final JButton albumsButton = new RoundedButtonMenu("Albums");
     final JButton produtoreButton = new RoundedButtonMenu("Produtores");
 
     public MainFrame(String titulo) {
@@ -87,7 +93,6 @@ public class MainFrame extends JFrame {
         constraints.gridy = 4;
         albumsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         menuPanel.add(albumsButton, constraints);
-
 
         infoPanel.setLayout(cl);
         infoPanel.setSize(600, 800);

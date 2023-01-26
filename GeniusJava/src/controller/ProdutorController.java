@@ -9,10 +9,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Classe controller de produtor. Aqui estão todos os métodos utilizados pela view para acessar os dados na classe. Esta
+ * classe implementa {@link controller.BaseController}.
+ *
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ * @see Produtor
+ */
 public class ProdutorController implements BaseController<Produtor> {
 
     /**
-     * @return Lista com todos os produtores
+     * Este método retorna todos os produtores cadastrados.
+     *
+     * @return lista de todos os produtor cadastrados
      */
     @Override
     public List<Produtor> get() {
@@ -20,7 +30,9 @@ public class ProdutorController implements BaseController<Produtor> {
     }
 
     /**
-     * @param id do produtor
+     * Este método exclue um produtor a partir do seu ID.
+     *
+     * @param id do produtor a ser excluído
      */
     @Override
     public void excluir(int id) {
@@ -28,18 +40,22 @@ public class ProdutorController implements BaseController<Produtor> {
     }
 
     /**
-     * @param pessoa info atualizada do produtor
+     * Este método adiciona um produtor.
+     *
+     * @param objeto informações do produtor a ser cadastrado
      */
     @Override
-    public void adicionar(Produtor pessoa) {
+    public void adicionar(Produtor objeto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate localDate = LocalDate.parse(pessoa.getDataDeNascimentoFormatada(), formatter);
-        bd.cadastrarProdutor(pessoa.getNome(), localDate, pessoa.getDescricao(), pessoa.getFuncao());
+        LocalDate localDate = LocalDate.parse(objeto.getDataDeNascimentoFormatada(), formatter);
+        bd.cadastrarProdutor(objeto.getNome(), localDate, objeto.getDescricao(), objeto.getFuncao());
     }
 
     /**
-     * @param id do produtor
-     * @param infoAtualizada info atualizada do produtor
+     * Este método edita a informações de um produtor, a partir do seu ID.
+     *
+     * @param id             do produtor a ser editado
+     * @param infoAtualizada informações atualizadas do produtor
      */
     @Override
     public void editar(int id, Produtor infoAtualizada) {
@@ -51,8 +67,10 @@ public class ProdutorController implements BaseController<Produtor> {
     }
 
     /**
-     * @param id do produtor
-     * @return produtor pelo id
+     * Este método retorna um produtor pelo seu ID;
+     *
+     * @param id do produtor buscado
+     * @return produtor com o id informado
      */
     @Override
     public Produtor get(int id) {
@@ -60,8 +78,11 @@ public class ProdutorController implements BaseController<Produtor> {
     }
 
     /**
-     * @param nome do produtor
-     * @return lista de produtores com o nome pesquisado
+     * Este método retorna todos os produtores com um certo nome, a lógica está implementada na classe PortalDeMusica.
+     * {@link model.PortalDeMusica#getProdutoresPeloNome(String)}
+     *
+     * @param nome do produtor a ser buscado
+     * @return lista de produtor com aquele nome
      */
     @Override
     public List<Produtor> get(String nome) {
@@ -69,7 +90,9 @@ public class ProdutorController implements BaseController<Produtor> {
     }
 
     /**
-     * @return id do proximo produtor a ser cadastrado
+     * Retorna o ID do próximo produtor a ser cadastrado.
+     *
+     * @return id do próximo produtor
      */
     @Override
     public int getProximoId() {
@@ -77,8 +100,10 @@ public class ProdutorController implements BaseController<Produtor> {
     }
 
     /**
+     * Este método retorna a lista de musicas associadas a um produtor com um certo ID.
+     *
      * @param id do produtor
-     * @return lista de musicas que aquele produtor participa
+     * @return lista de músicas
      */
     @Override
     public List<Musica> getMusicasAssociadas(int id) {
@@ -86,7 +111,7 @@ public class ProdutorController implements BaseController<Produtor> {
         List<Musica> musicasFiltradas = new ArrayList<>();
 
         for (Musica musica : musicas) {
-            for(Produtor prod: musica.getProdutores()){
+            for (Produtor prod : musica.getProdutores()) {
                 if (prod.getId() == id) {
                     musicasFiltradas.add(musica);
                     break;

@@ -14,6 +14,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * Essa classe implementa a classe BasePanel com o Generics de album e aprensenta as informações de Album, além de
+ * possibilitar o CRUD. Usando a sua controller correspondente {@link AlbumController} para realizar as operações.
+ * Usando a sua dialog correspondente para apresentar as informações {@link AlbumsDialog}
+ *
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ * @see Album
+ * @see AlbumController
+ * @see AlbumsDialog
+ */
 public class AlbumsPanel extends BasePanel<Album> {
 
     AlbumController controller = new AlbumController();
@@ -27,7 +38,11 @@ public class AlbumsPanel extends BasePanel<Album> {
     }
 
     /**
+     * Este método sobreescreve o método visualizar e implementa a lógica de visualização dos dados do álbum. Se uma
+     * linha da tabela estiver sido selecionada, este método exbibe as informações de álbum a partir da classe
+     * AlbumDialog que recebe as informações a serem exibidas.
      *
+     * @see AlbumsDialog
      */
     @Override
     protected void visualizar() {
@@ -54,13 +69,18 @@ public class AlbumsPanel extends BasePanel<Album> {
 
         }
         else {
-            showJOptionPaneMessage("Selecione um Álbum para visualizar", "Erro ao visualizar Álbum", "album");
+            showJOptionPaneMessage("Selecione um Album para visualizar", "Erro ao visualizar Album", "album");
         }
     }
 
     /**
+     * Este método abre uma série de telas para o cadastro/atualização de um álbum. O retorno da entrada do utilizador
+     * é armazenado e logo em seguida é verficado se está vazio, caso não esteja continua com o fluxo de validação de
+     * dados. Utilizando a AlbumController para realizar o cadastro ou atualização. Nota-se que para a edição deve
+     * haver uma linha da tabela {@link #table} selecionada.
+     *
      * @param editar booleano que indica a ação a ser executada, edição ou deleção
-     *               Este método abre uma série de telas para o cadastro/atualização de um álbum
+     * @see AlbumController
      */
     @Override
     protected void alterarDados(boolean editar) {
@@ -199,9 +219,10 @@ public class AlbumsPanel extends BasePanel<Album> {
     }
 
     /**
-     * Este método pesquisa um álbum, alterando a tabela com os resultados encontrados.
+     * Este método pesquisa um álbum, pelo nome, alterando a tabela com os resultados encontrados. Faz utilização do
+     * método de busca da AlbumController {@link AlbumController#get(String)}
      *
-     * @param text nome da música sendo procurada
+     * @param text nome do álbum sendo procurado
      */
     @Override
     protected void pesquisar(String text) {
@@ -219,9 +240,9 @@ public class AlbumsPanel extends BasePanel<Album> {
     }
 
     /**
-     * Este método popula a tabela quando o programa abre pela primeira vez.
+     * Este método preenche a tabela com os dados
      *
-     * @return o modelo da tabela com os álbums cadastrados
+     * @return o modelo padrão da tabela com os álbums cadastrados
      */
     @Override
     protected DefaultTableModel popularDados() {

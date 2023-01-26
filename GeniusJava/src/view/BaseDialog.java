@@ -7,6 +7,18 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+/**
+ * Esta classe abstrata exibe uma janela quando herdada pelas classes dialog, exibindo assim as informações das
+ * classes Album, Artista e Produtor.
+ *
+ * @param <K> generics que possibilita a generalização da classe.
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ * @see ArtistaDialog
+ * @see AlbumsDialog
+ * @see ProdutorDialog
+ */
+
 public abstract class BaseDialog<K> extends JDialog {
     private JLabel nome;
     private JLabel dataDeNascimento;
@@ -19,6 +31,14 @@ public abstract class BaseDialog<K> extends JDialog {
     private int id;
     private BaseController<K> controller;
 
+    /**
+     * @param controller       que representa a controller associada a dialog
+     * @param id               que representa o ID do objeto
+     * @param nome             que representa o nome do objeto
+     * @param dataDeNascimento que representa a data de nascimento ou lançamento do objeto
+     * @param descricao        que representa a descrição do objeto
+     * @param dataLabel        que representa a label a ser exibida para a dataDeNascimento
+     */
     public BaseDialog(
             BaseController<K> controller,
             int id, String nome,
@@ -38,6 +58,9 @@ public abstract class BaseDialog<K> extends JDialog {
         setVisible(true);
     }
 
+    /**
+     * Este método implementa o layout básico de todas as dialogs que herdam da classe BaseDialog
+     */
     private void setUpLayout() {
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -53,9 +76,8 @@ public abstract class BaseDialog<K> extends JDialog {
         constraints.gridy = 0;
         add(nome, constraints);
 
-
         // Data
-        JLabel birthDateLabel = new JLabel("Data de "+dataLabel +":");
+        JLabel birthDateLabel = new JLabel("Data de " + dataLabel + ":");
         constraints.gridx = 0;
         constraints.gridy = 2;
         add(birthDateLabel, constraints);
@@ -73,7 +95,6 @@ public abstract class BaseDialog<K> extends JDialog {
         constraints.gridy = 2;
         add(dataDeNascimento, constraints);
 
-
         // table
         table = new JTable(popularDados());
         table.setDefaultEditor(Object.class, null);
@@ -87,6 +108,11 @@ public abstract class BaseDialog<K> extends JDialog {
 
     }
 
+    /**
+     * Este método preenche a tabela das dialogs, com os dados resgatados da controller.
+     *
+     * @return modelo padrão da tabela
+     */
     protected DefaultTableModel popularDados() {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         var list = controller.getMusicasAssociadas(id);

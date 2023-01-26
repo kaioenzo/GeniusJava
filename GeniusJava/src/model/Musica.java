@@ -4,6 +4,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Classe que representa uma Música. Com nome, gêneros, letra, artistas e produtores.
+ *
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ * @see Pessoa
+ */
 public class Musica {
     private int id;
     private String nome;
@@ -14,6 +21,14 @@ public class Musica {
     private boolean fazParteAlbum;
 
 
+    /**
+     * @param id que representa o ID único da música
+     * @param nome que representa o nome da música
+     * @param generos que representa a lista de gêneros musicais da música
+     * @param letra que representa a letra da música
+     * @param artistas que representa os artistas da música
+     * @param produtores que representa os produtores da música
+     */
     public Musica(int id, String nome, HashSet<String> generos, String letra, HashSet<Artista> artistas, HashSet<Produtor> produtores) {
         this.id = id;
         this.nome = nome;
@@ -48,17 +63,35 @@ public class Musica {
         return produtores.stream().toList();
     }
 
+    /**
+     * Este método adiciona os artistas da música, antes ele limpa os artistas para evitar que artistas repetidos
+     * sejam adicionados
+     *
+     * @param artistas artistas a serem adicionados a essa música.
+     */
     public void adicionarArtistas(List<Artista> artistas) {
         this.artistas.clear();
         this.artistas.addAll(artistas);
     }
 
+    /**
+     * * Este método adiciona os produtores da música, antes ele limpa os produtores da música para evitar que
+     * artistas repetidos sejam adicionados
+     *
+     * @param produtores produtores a serem adicionados a essa música.
+     */
     public void adicionarProdutores(List<Produtor> produtores) {
 
         this.produtores.clear();
         this.produtores.addAll(produtores);
     }
 
+    /**
+     * * Este método adiciona os gêneros da música, antes ele limpa os gêneros da música para evitar que
+     * gêneros repetidos sejam adicionados
+     *
+     * @param generos musicais a serem adicionados a essa música.
+     */
     public void adicionargenerosmusicais(List<String> generos) {
 
         this.generos.clear();
@@ -133,6 +166,7 @@ public class Musica {
     public int hashCode() {
         return Objects.hash(id, nome, generos, letra, artistas, produtores);
     }
+
 
     public boolean getFazParteAlbum() {
         return fazParteAlbum;

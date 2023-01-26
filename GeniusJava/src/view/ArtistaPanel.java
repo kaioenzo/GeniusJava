@@ -11,7 +11,15 @@ import java.text.ParseException;
 import java.time.LocalDate;
 
 /**
- * Classe principal de artista, onde lista-se os artistas e possibilita a sua criação, exclusão, edição e detalhamento.
+ * Essa classe implementa a classe BasePanel com o Generics de artista e aprensenta as informações de Artista, além de
+ * possibilitar o CRUD. Usando a sua controller correspondente {@link ArtistasController} para realizar as operações.
+ * Usando a sua dialog correspondente para apresentar as informações {@link ArtistaDialog}
+ *
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ * @see Artista
+ * @see ArtistasController
+ * @see ArtistaDialog
  */
 public class ArtistaPanel extends BasePanel<Artista> {
 
@@ -27,7 +35,11 @@ public class ArtistaPanel extends BasePanel<Artista> {
     }
 
     /**
-     * Método para abrir um dialog de artista, contendo suas informações e músicas
+     * Este método sobreescreve o método visualizar e implementa a lógica de visualização dos dados do artista. Se uma
+     * linha da tabela estiver sido selecionada, este método exbibe as informações da música a partir da classe
+     * MusicaDialog que recebe as informações a serem exibidas.
+     *
+     * @see MusicaDialog
      */
     @Override
     protected void visualizar() {
@@ -56,8 +68,13 @@ public class ArtistaPanel extends BasePanel<Artista> {
     }
 
     /**
-     * @param editar parametro para definir se está editando um artista ou criando um novo
-     *  Esse método simplifica e unifica a criação/edição de um artista
+     * Este método abre uma série de telas para o cadastro/atualização de um artista. O retorno da entrada do
+     * utilizador é armazenado e logo em seguida é verficado se está vazio, caso não esteja continua com o fluxo de
+     * validação de dados. Utilizando a ArtistaController para realizar o cadastro ou atualização. Nota-se que para a
+     * edição deve haver uma linha da tabela {@link #table} selecionada.
+     *
+     * @param editar booleano que indica a ação a ser executada, edição ou deleção
+     * @see ArtistasController
      */
     @Override
     protected void alterarDados(boolean editar) {
@@ -182,8 +199,10 @@ public class ArtistaPanel extends BasePanel<Artista> {
     }
 
     /**
-     * @param text recebe o nome do artista procurado
-     * Este método procura uma string parecida na lista de artistas e atualiza a tabela com os resultados
+     * Este método pesquisa um artista, pelo nome, alterando a tabela com os resultados encontrados. Faz utilização do
+     * método de busca de ArtistaController {@link ArtistasController#get(String)}
+     *
+     * @param text nome do artista sendo procurado
      */
     @Override
     protected void pesquisar(String text) {
@@ -204,7 +223,9 @@ public class ArtistaPanel extends BasePanel<Artista> {
     }
 
     /**
-     * @return modelo padrão para a tabela de artistas
+     * Este método preenche a tabela com os dados.
+     *
+     * @return o modelo padrão da tabela com os produtores cadastrados
      */
     @Override
     protected DefaultTableModel popularDados() {

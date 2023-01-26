@@ -9,9 +9,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Classe controller de artista. Aqui estão todos os métodos utilizados pela view para acessar os dados na classe. Esta
+ * classe implementa {@link controller.BaseController}.
+ *
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ * @see Artista
+ */
 public class ArtistasController implements BaseController<Artista> {
+
     /**
-     * @return Lista de todos os artistas
+     * Este método retorna todos os artistas cadastrados.
+     *
+     * @return lista de todos os artistas cadastrados
      */
     @Override
     public List<Artista> get() {
@@ -19,7 +30,9 @@ public class ArtistasController implements BaseController<Artista> {
     }
 
     /**
-     * @param id do artista a ser excluido
+     * Este método exclue um artista a partir do seu ID.
+     *
+     * @param id do artista a ser excluído
      */
     @Override
     public void excluir(int id) {
@@ -27,32 +40,36 @@ public class ArtistasController implements BaseController<Artista> {
     }
 
     /**
-     * @param pessoa objeto de artista a ser criado
+     * Este método adiciona um artista.
+     *
+     * @param objeto informações do artista a ser cadastrado
      */
     @Override
-    public void adicionar(Artista pessoa) {
+    public void adicionar(Artista objeto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate localDate = LocalDate.parse(pessoa.getDataDeNascimentoFormatada(), formatter);
-        bd.cadastrarArtista(pessoa.getNome(), localDate, pessoa.getDescricao(), pessoa.getGeneroMusical());
+        LocalDate localDate = LocalDate.parse(objeto.getDataDeNascimentoFormatada(), formatter);
+        bd.cadastrarArtista(objeto.getNome(), localDate, objeto.getDescricao(), objeto.getGeneroMusical());
     }
 
     /**
-     * @param id             do artista que será editado
-     * @param infoAtualizada objeto com informações da edição
+     * Este método edita a informações de um artista, a partir do seu ID.
+     *
+     * @param id             do artista a ser editado
+     * @param infoAtualizada informações atualizadas do artista
      */
     @Override
     public void editar(int id, Artista infoAtualizada) {
-        var artista = get(id);
-        artista.setNome(infoAtualizada.getNome());
+        var artista = get(id); artista.setNome(infoAtualizada.getNome());
         artista.setDataDeNascimento(LocalDate.parse(infoAtualizada.getDataDeNascimentoFormatada(), formatter()));
         artista.setGeneroMusical(infoAtualizada.getGeneroMusical());
         artista.setDescricao(infoAtualizada.getDescricao());
     }
 
-
     /**
-     * @param id do artista procurado
-     * @return artista procurado
+     * Este método retorna um artista pelo seu ID;
+     *
+     * @param id do artista buscado
+     * @return artista com o id informado
      */
     @Override
     public Artista get(int id) {
@@ -60,8 +77,11 @@ public class ArtistasController implements BaseController<Artista> {
     }
 
     /**
-     * @param nome do artista procurado
-     * @return retorna lista de artistas com o nome pesquisado
+     * Este método retorna todos os artistas com um certo nome, a lógica está implementada na classe PortalDeMusica.
+     * {@link model.PortalDeMusica#getAlbumPeloNome(String)}
+     *
+     * @param nome do artista a ser buscado
+     * @return lista de artistas com aquele nome
      */
     @Override
     public List<Artista> get(String nome) {
@@ -69,7 +89,9 @@ public class ArtistasController implements BaseController<Artista> {
     }
 
     /**
-     * @return id do próximo artista a ser cadastrado
+     * Retorna o ID do próximo artista a ser cadastrado.
+     *
+     * @return id do próximo artista
      */
     @Override
     public int getProximoId() {
@@ -77,25 +99,23 @@ public class ArtistasController implements BaseController<Artista> {
     }
 
     /**
-     * @param id do artista que se deseja obter as músicas
-     * @return lista de musicas associadas aquele artista
+     * Este método retorna a lista de músicas associadas a um artista com um certo ID.
+     *
+     * @param id do artista
+     * @return lista de músicas
      */
     @Override
     public List<Musica> getMusicasAssociadas(int id) {
-        var musicasController = new MusicaController();
-        var musicas = musicasController.get();
-        List<Musica> musicasFiltradas = new ArrayList<>();
+        var artistasController = new MusicaController(); var musicaList = artistasController.get();
+        List<Musica> artistasFiltradas = new ArrayList<>();
 
-        for (Musica musica : musicas) {
+        for (Musica musica : musicaList) {
             for (Artista artist : musica.getArtistas()) {
                 if (artist.getId() == id) {
-                    musicasFiltradas.add(musica);
-                    break;
+                    artistasFiltradas.add(musica); break;
                 }
             }
-        }
-        return musicasFiltradas;
+        } return artistasFiltradas;
     }
-
 
 }

@@ -9,12 +9,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Classe controller de música. Aqui estão todos os métodos utilizados pela view para acessar os dados na classe. Esta
+ * classe implementa {@link controller.BaseController}.
+ *
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ * @see Musica
+ */
 public class MusicaController implements BaseController<Musica> {
     private AlbumController albumController = new AlbumController();
 
     /**
-     * @param id da música procurada
-     * @return musica buscada pelo id
+     * Este método retorna um artista pelo seu ID;
+     *
+     * @param id do artista buscado
+     * @return artista com o id informado
      */
     @Override
     public Musica get(int id) {
@@ -22,7 +32,9 @@ public class MusicaController implements BaseController<Musica> {
     }
 
     /**
-     * @return lista com todas as músicas cadastradas
+     * Este método retorna todos os artistas cadastrados.
+     *
+     * @return lista de todos os artistas cadastrados
      */
     @Override
     public List<Musica> get() {
@@ -30,8 +42,11 @@ public class MusicaController implements BaseController<Musica> {
     }
 
     /**
-     * @param nome
-     * @return lista com musicas com aquele nome
+     * Este método retorna todos os artistas com um certo nome, a lógica está implementar na classe
+     * {@link model.PortalDeMusica#getAlbumPeloNome(String)}
+     *
+     * @param nome do artista a ser buscado
+     * @return lista de artistas com aquele nome
      */
     @Override
     public List<Musica> get(String nome) {
@@ -39,52 +54,46 @@ public class MusicaController implements BaseController<Musica> {
     }
 
     /**
-     * Este método exclue uma música a partir do seu id e também remove de um álbum, caso a música esteja
-     * asscoiada a algum álbum
+     * Este método exclue um artista a partir do seu ID.
      *
-     * @param id da música a ser excluída
+     * @param id do artista a ser excluído
      */
     @Override
     public void excluir(int id) {
-        var optionalAlbum = getAlbumAssocieado(id);
-        if (optionalAlbum.isPresent()) {
-            var album = optionalAlbum.get();
-            var musica = get(id);
-            album.removerMusica(musica);
-        }
-        bd.exlcuirMusica(get(id));
+        var optionalAlbum = getAlbumAssocieado(id); if (optionalAlbum.isPresent()) {
+            var album = optionalAlbum.get(); var musica = get(id); album.removerMusica(musica);
+        } bd.exlcuirMusica(get(id));
     }
 
     /**
-     * @param infoAtualizada Este método adiciona novas músicas
+     * Este método adiciona um artista, e também verifica se as músicas informadas não fazem parte de outros artistas.
+     *
+     * @param objeto informações do artista a ser cadastrado
      */
     @Override
-    public void adicionar(Musica infoAtualizada) {
+    public void adicionar(Musica objeto) {
 
-        bd.cadastrarMusica(
-                infoAtualizada.getNome(),
-                infoAtualizada.getGeneros(),
-                infoAtualizada.getLetra(),
-                infoAtualizada.getArtistas(),
-                infoAtualizada.getProdutores());
+        bd.cadastrarMusica(objeto.getNome(), objeto.getGeneros(), objeto.getLetra(), objeto.getArtistas(), objeto.getProdutores());
     }
 
     /**
-     * @param id
-     * @param infoAtualizada
+     * Este método edita a informações de um artista, a partir do seu ID.
+     *
+     * @param id             do artistaa ser editado
+     * @param infoAtualizada informações atualizadas do artista
      */
     @Override
     public void editar(int id, Musica infoAtualizada) {
-        var musica = get(id);
-        musica.setNome(infoAtualizada.getNome());
-        musica.setLetra(infoAtualizada.getLetra());
+        var musica = get(id); musica.setNome(infoAtualizada.getNome()); musica.setLetra(infoAtualizada.getLetra());
         musica.adicionarArtistas(infoAtualizada.getArtistas());
         musica.adicionarProdutores(infoAtualizada.getProdutores());
         musica.adicionargenerosmusicais(infoAtualizada.getGeneros());
     }
 
     /**
-     * @return id da próxima música
+     * Retorna o ID do próximo artista a ser cadastrado.
+     *
+     * @return id do próximo artista
      */
     @Override
     public int getProximoId() {
@@ -92,8 +101,10 @@ public class MusicaController implements BaseController<Musica> {
     }
 
     /**
-     * @param id
-     * @return
+     * Este método retorna a lista de musicas associadas ao artista com um certo ID.
+     *
+     * @param id do artista
+     * @return lista de músicas
      */
     @Override
     public List<Musica> getMusicasAssociadas(int id) {
@@ -135,13 +146,11 @@ public class MusicaController implements BaseController<Musica> {
      * @return String com o nome do álbum ou mensagem padrão
      */
     public String getNomeAlbumAssociado(int id) {
-        var musica = get(id);
-        var albums = albumController.get();
+        var musica = get(id); var albums = albumController.get();
         var optional = albums.stream().filter(album -> album.getMusicas().contains(musica)).findFirst();
         if (optional.isPresent()) {
             return optional.get().getNome();
-        }
-        return "Não faz parte de nenhum álbum";
+        } return "Não faz parte de nenhum álbum";
     }
 
     /**
@@ -151,12 +160,10 @@ public class MusicaController implements BaseController<Musica> {
      * @return instância  do álbum
      */
     public Optional<Album> getAlbumAssocieado(int id) {
-        var musica = get(id);
-        var albums = albumController.get();
+        var musica = get(id); var albums = albumController.get();
         var optional = albums.stream().filter(album -> album.getMusicas().contains(musica)).findFirst();
         if (optional.isPresent()) {
             return optional;
-        }
-        return optional;
+        } return optional;
     }
 }
