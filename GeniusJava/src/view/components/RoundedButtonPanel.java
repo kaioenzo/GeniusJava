@@ -3,6 +3,11 @@ package view.components;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe que padroniza os botões das classes dialog.
+ *
+ * @see view.BaseDialog
+ */
 public class RoundedButtonPanel extends JButton {
     private Color backgroundColor = new Color(111, 157, 234);
     private int arcWidth = 15;

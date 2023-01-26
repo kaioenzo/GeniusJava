@@ -6,6 +6,13 @@ import model.Musica;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Esta classe abre uma dialog com informações do artista. Devido ao seu layout especial, está classe não herda de
+ * BasePanel.
+ *
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ */
 public class MusicaDialog extends JDialog {
     private final JLabel produtores;
     private MusicaController controller;
@@ -15,6 +22,12 @@ public class MusicaDialog extends JDialog {
     private JLabel nome;
     private JLabel artistas;
 
+    /**
+     * @param controller que representa a controller da música
+     * @param id         que representa o ID único da música
+     * @param artistas   que representa os artistas da música
+     * @param produtores que representa os produtores da música
+     */
     public MusicaDialog(
             MusicaController controller,
             int id,
@@ -33,6 +46,9 @@ public class MusicaDialog extends JDialog {
         this.setVisible(true);
     }
 
+    /**
+     * Este método altera o layout da dialog e apresentando as informações
+     */
     private void setUpLayout() {
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();

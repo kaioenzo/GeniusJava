@@ -7,14 +7,19 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JButton;
 
+/**
+ * Classe que padroniza os botões do menu lateral da MainFrame
+ *
+ * @see main.MainFrame
+ */
 public class RoundedButtonMenu extends JButton {
-    private Color backgroundColor = new Color(	248,241,108);
+    private Color backgroundColor = new Color(248, 241, 108);
     private int arcWidth = 15;
     private int arcHeight = 15;
 
     public RoundedButtonMenu(String label) {
         super(label);
-        super.setForeground(new Color(	11, 11, 14));
+        super.setForeground(new Color(11, 11, 14));
         setOpaque(false);
         setContentAreaFilled(false);
         setFocusPainted(false);

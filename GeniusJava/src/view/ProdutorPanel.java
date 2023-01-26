@@ -10,6 +10,17 @@ import javax.swing.text.MaskFormatter;
 import java.text.ParseException;
 import java.time.LocalDate;
 
+/**
+ * Essa classe implementa a classe BasePanel com o Generics de produtor e aprensenta as informações de Produtor, além de
+ * possibilitar o CRUD. Usando a sua controller correspondente {@link ProdutorController} para realizar as operações.
+ * Usando a sua dialog correspondente para apresentar as informações {@link ProdutorDialog}
+ *
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ * @see Produtor
+ * @see ProdutorController
+ * @see ProdutorDialog
+ */
 public class ProdutorPanel extends BasePanel<Produtor> {
     final String[] columnNames = {"Id", "Produtor", "Função", "Data de Nascimento"};
     final String[] produtorFuncoes = {"EXECUTIVO", "ENGENHEIRO DE MIXAGEM", "ENGENHEIRO DE SOM", "EDITOR", "VOCAL"};
@@ -23,7 +34,11 @@ public class ProdutorPanel extends BasePanel<Produtor> {
     }
 
     /**
-     * Método para abrir um dialog de produtor, contendo suas informações e músicas
+     * Este método sobreescreve o método visualizar e implementa a lógica de visualização dos dados do produtor. Se uma
+     * linha da tabela estiver sido selecionada, este método exbibe as informações de produtor a partir da classe
+     * ProdutorDialog que recebe as informações a serem exibidas.
+     *
+     * @see ProdutorDialog
      */
     @Override
     protected void visualizar() {
@@ -53,9 +68,15 @@ public class ProdutorPanel extends BasePanel<Produtor> {
         }
     }
 
-    /**
-     * @param editar booleano que indica a ação a ser executada, edição ou deleção
-     */
+        /**
+         * Este método abre uma série de telas para o cadastro/atualização de um produtor. O retorno da entrada do
+         * utilizador é armazenado e logo em seguida é verficado se está vazio, caso não esteja continua com o fluxo de
+         * validação de dados. Utilizando a ProdutorController para realizar o cadastro ou atualização. Nota-se que para a
+         * edição deve haver uma linha da tabela {@link #table  } selecionada.
+         *
+         * @param editar booleano que indica a ação a ser executada, edição ou deleção
+         * @see ProdutorController
+         */
     @Override
     protected void alterarDados(boolean editar) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -105,7 +126,7 @@ public class ProdutorPanel extends BasePanel<Produtor> {
         }
         funcaoBox.setSelectedIndex(0);
 
-         funcao = (String) JOptionPane.showInputDialog(
+        funcao = (String) JOptionPane.showInputDialog(
                 this,
                 "Insira o gênero musical do produtor:",
                 "Criação de produtor",
@@ -187,7 +208,10 @@ public class ProdutorPanel extends BasePanel<Produtor> {
     }
 
     /**
-     * @param text da pesquisa de produtores
+     * Este método pesquisa um produtor, pelo nome, alterando a tabela com os resultados encontrados. Faz utilização do
+     * método de busca de ProdutorController {@link ProdutorController#get(String)}
+     *
+     * @param text nome do produtor sendo procurado
      */
     @Override
     protected void pesquisar(String text) {
@@ -208,7 +232,9 @@ public class ProdutorPanel extends BasePanel<Produtor> {
     }
 
     /**
-     * @return modelo da tabela
+     * Este método preenche a tabela com os dados.
+     *
+     * @return o modelo padrão da tabela com os produtores cadastrados
      */
     @Override
     protected DefaultTableModel popularDados() {

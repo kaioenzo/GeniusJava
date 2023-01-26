@@ -14,6 +14,17 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * Essa classe implementa a classe BasePanel com o Generics de produtor e aprensenta as informações de Muisca, além de
+ * possibilitar o CRUD. Usando a sua controller correspondente {@link MusicaController} para realizar as operações.
+ * Usando a sua dialog correspondente para apresentar as informações {@link MusicaDialog}
+ *
+ * @author Kaio Enzo Salgado
+ * @version 1.0
+ * @see Musica
+ * @see MusicaController
+ * @see MusicaDialog
+ */
 public class MusicasPanel extends BasePanel<Musica> {
     private final MusicaController controller = new MusicaController();
     private final ArtistasController artistasController = new ArtistasController();
@@ -28,7 +39,11 @@ public class MusicasPanel extends BasePanel<Musica> {
     }
 
     /**
+     * Este método sobreescreve o método visualizar e implementa a lógica de visualização dos dados da música. Se uma
+     * linha da tabela estiver sido selecionada, este método exbibe as informações de música a partir da classe
+     * MusicaDialog que recebe as informações a serem exibidas.
      *
+     * @see MusicaDialog
      */
     @Override
     protected void visualizar() {
@@ -57,8 +72,13 @@ public class MusicasPanel extends BasePanel<Musica> {
     }
 
     /**
+     * Este método abre uma série de telas para o cadastro/atualização de uma música. O retorno da entrada do
+     * utilizador é armazenado e logo em seguida é verficado se está vazio, caso não esteja continua com o fluxo de
+     * validação de dados. Utilizando a MusicaController para realizar o cadastro ou atualização. Nota-se que para a
+     * edição deve haver uma linha da tabela {@link #table  } selecionada.
+     *
      * @param editar booleano que indica a ação a ser executada, edição ou deleção
-     *               Este método abre uma série de telas para o cadastro/atualização de uma música
+     * @see MusicaController
      */
     @Override
     protected void alterarDados(boolean editar) {
@@ -257,8 +277,10 @@ public class MusicasPanel extends BasePanel<Musica> {
     }
 
     /**
-     * @param text nome da música procurada
-     *             Este método altera  a tabela com os resultados encontrados
+     * Este método pesquisa uma música, pelo nome, alterando a tabela com os resultados encontrados. Faz utilização do
+     * método de busca de MusicaController {@link MusicaController#get(String)}
+     *
+     * @param text nome da música sendo procurada
      */
     @Override
     protected void pesquisar(String text) {
@@ -281,7 +303,9 @@ public class MusicasPanel extends BasePanel<Musica> {
     }
 
     /**
-     * @return modelo da tabela com os dados das músicas
+     * Este método preenche a tabela com os dados.
+     *
+     * @return o modelo padrão da tabela com os álbums cadastrados
      */
     @Override
     protected DefaultTableModel popularDados() {
