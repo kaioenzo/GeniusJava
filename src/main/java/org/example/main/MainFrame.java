@@ -1,19 +1,24 @@
 package org.example.main;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import org.example.controller.AlbumController;
 import org.example.controller.ArtistasController;
 import org.example.controller.MusicaController;
 import org.example.controller.ProdutorController;
-import org.example.model.*;
+import org.example.model.Album;
+import org.example.model.Artista;
+import org.example.model.Atribuicao;
+import org.example.model.Musica;
+import org.example.model.PortalDeMusica;
+import org.example.model.Produtor;
 import org.example.view.AlbumsPanel;
 import org.example.view.ArtistaPanel;
 import org.example.view.MusicasPanel;
 import org.example.view.ProdutorPanel;
 import org.example.view.components.RoundedButtonMenu;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;

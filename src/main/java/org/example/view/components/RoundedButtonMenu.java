@@ -1,7 +1,5 @@
 package org.example.view.components;
 
-import org.example.main.MainFrame;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
