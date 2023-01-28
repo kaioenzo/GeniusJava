@@ -113,7 +113,11 @@ public class MusicaController implements BaseController<Musica> {
      */
     @Override
     public List<Musica> getMusicasAssociadas(int id) {
-        return null;
+        var musicas = getALlMusicas();
+        var controllerArtista = new ArtistasController();
+        var artista = controllerArtista.get(id);
+
+        return musicas.stream().filter(musica -> musica.getArtistas().contains(artista)).toList();
     }
 
     /**

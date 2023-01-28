@@ -99,8 +99,8 @@ public class TestMusicaController {
     }
 
     @Test
-    public void TestaMetodoGetMusicasAssociadasComRetornoNulo() {
-        assertNull(musicaController.getMusicasAssociadas(1));
+    public void TestaMetodoGetMusicasAssociadasDeveriaRetornarAMusicaInicial() {
+        assertTrue(musicaController.getMusicasAssociadas(1).contains(musicaController.get(1)));
     }
 
     @Test

@@ -252,6 +252,187 @@ public class MainFrame extends JFrame {
 
         // cadastra album e recupera pelo nome
         albumController.adicionar(new Album(albumController.getProximoId(), "1989", LocalDate.now(), musicas));
+
+        // cadastra mais informações
+        artistasController.adicionar(new Artista(artistasController.getProximoId(), "Kanye West", LocalDate.now(),
+                "Artista de rap", "hip-gop"));
+        artistasController.adicionar(new Artista(artistasController.getProximoId(), "PARTYNEXTDOOR", LocalDate.now(),
+                "Artista de rap alternativo", "hip-gop"));
+        artistasController.adicionar(new Artista(artistasController.getProximoId(), "LiSA", LocalDate.now(),
+                "Artista japoensa", "jpop"));
+        artistasController.adicionar(new Artista(artistasController.getProximoId(), "Tyler, the creator",
+                LocalDate.now(),
+                "Artista americano de r&b", "R&B"));
+
+        produtorController.adicionar(new Produtor(produtorController.getProximoId(), "NO ID", LocalDate.now(),
+                "Produtor icônico, já produziu mais de 1000 músicas", Atribuicao.ENGENHEIRODESOM));
+        produtorController.adicionar(new Produtor(produtorController.getProximoId(), "Dr.DRE", LocalDate.now(),
+                "Produtor lendário", Atribuicao.EXECUTIVO));
+        produtorController.adicionar(new Produtor(produtorController.getProximoId(), "Okinawa", LocalDate.now(),
+                "Produtora japonesa", Atribuicao.EXECUTIVO));
+
+        var artistasAlbumKanye = new ArrayList<Artista>();
+        artistasAlbumKanye.addAll(artistasController.get("PARTYNEXTDOOR"));
+        artistasAlbumKanye.addAll(artistasController.get("Kanye West"));
+        var produtoresAlbumKanye = new ArrayList<Produtor>();
+        produtoresAlbumKanye.add(produtorController.get("NO ID").get(0));
+        musicaController.adicionar(
+                new Musica(musicaController.getProximoId(),
+                        "Ghost Town",
+                        new HashSet<>(Collections.singleton("hip-hop")),
+                        "Some day, some day\n" +
+                                "Some day I'll, I wanna wear a starry crown\n" +
+                                "Some day, some day\n" +
+                                "Some day I wanna lay down, like God did, on Sunday\n" +
+                                "Hold up, hold up\n" +
+                                "Some days, some days\n" +
+                                "I remember this on Sunday\n" +
+                                "Back way, yeah way, way\n" +
+                                "Some day, mmm, mmm\n" +
+                                "Some day, I wanna tell everybody, some days\n" +
+                                "I wanna hit the red dot, I'll never find\n" +
+                                "Some days, some\n" +
+                                "Each one, knowing how 'm livin', smokin' marijuana\n" +
+                                "Now I'm livin' high, doin' what I wanna, some days\n" +
+                                "I've been tryin' to make you love me\n" +
+                                "But everything I try just takes you further from me\n" +
+                                "Some day we gon' set it off\n" +
+                                "Some day we gon' get this off\n" +
+                                "Baby, don't you bet it all\n" +
+                                "On a pack of Fentanyl\n" +
+                                "You might think they wrote you off\n" +
+                                "They gon' have to rope me off\n" +
+                                "Some day the drama'll be gone\n" +
+                                "And they'll pray, it's not enough\n" +
+                                "Sometimes I take all the shine\n" +
+                                "Talk like I drank all the wine\n" +
+                                "Years ahead but way behind\n" +
+                                "I'm on one, two, three, four, five\n" +
+                                "No half-truths, just naked minds\n" +
+                                "Caught between space and time\n" +
+                                "This not what we had in mind\n" +
+                                "But maybe some day\n" +
+                                "I've been tryin' to make you love me\n" +
+                                "But everything I try just takes you further from me\n" +
+                                "Oh, once again I am a child\n" +
+                                "I let it all go (go), of everything that I know, yeah\n" +
+                                "Of everything that I know, yeah\n" +
+                                "And nothing hurts anymore, I feel kinda free\n" +
+                                "We're still the kids we used to be, yeah, yeah\n" +
+                                "I put my hand on the stove, to see if I still bleed\n" +
+                                "Yeah, and nothing hurts anymore, I feel kinda free\n" +
+                                "We're still the kids we used to be, yeah, yeah\n" +
+                                "I put my hand on the stove, to see if I still bleed\n" +
+                                "Yeah, and nothing hurts anymore, I feel kinda free\n" +
+                                "We're still the kids we used to be, yeah, yeah\n" +
+                                "I put my hand on the stove, to see if I still bleed\n" +
+                                "Yeah, and nothing hurts anymore, I feel kinda free\n" +
+                                "We're still the kids we used to be, yeah, yeah\n" +
+                                "I put my hand on the stove, to see if I still bleed\n" +
+                                "Yeah, and nothing hurts anymore, I feel kinda free",
+                        new HashSet<>(artistasAlbumKanye),
+                        new HashSet<>(produtoresAlbumKanye)
+                ));
+
+        var artistaAlbumLisa = new ArrayList<Artista>(artistasController.get("LiSA"));
+        var produtorMusicaLisa = new ArrayList<Produtor>();
+        produtorMusicaLisa.add(produtorController.get("Okinawa").get(0));
+        musicaController.adicionar(
+                new Musica(musicaController.getProximoId(),
+                        "Gurenge",
+                        new HashSet<>(Collections.singleton("hip-hop")),
+                        "強くなれる理由を知った 僕を連れて進め\n" +
+                                "泥だらけの走馬灯に酔う こわばる心\n" +
+                                "震える手は掴みたいものがある それだけさ\n" +
+                                "夜の匂いに (I'll spend all thirty nights)\n" +
+                                "空睨んでも (Staring into the sky)\n" +
+                                "変わっていけるのは自分自身だけ それだけさ\n" +
+                                "強くなれる理由を知った 僕を連れて進め\n" +
+                                "どうしたって！\n" +
+                                "消せない夢も 止まれない今も\n" +
+                                "誰かのために強くなれるなら\n" +
+                                "ありがとう 悲しみよ\n" +
+                                "世界に打ちのめされて 負ける意味を知った\n" +
+                                "紅蓮の華よ咲き誇れ！ 運命を照らして\n" +
+                                "イナビカリの雑音が耳を刺す 戸惑う心\n" +
+                                "優しいだけじゃ守れないものがある？ わかってるけど\n" +
+                                "水面下で絡まる善悪 透けて見える偽善に天罰\n" +
+                                "Tell me why, Tell me why, Tell me why, Tell me...\n" +
+                                "I don't need you!\n" +
+                                "逸材の花より 挑み続け咲いた一輪が美しい\n" +
+                                "乱暴に敷き詰められた トゲだらけの道も\n" +
+                                "本気の僕だけに現れるから 乗り越えてみせるよ\n" +
+                                "簡単に片付けられた 守れなかった夢も\n" +
+                                "紅蓮の心臓に根を生やし この血に宿って\n" +
+                                "人知れず儚い 散りゆく結末\n" +
+                                "無情に破れた 悲鳴の風吹く\n" +
+                                "誰かの笑う影 誰かの泣き声\n" +
+                                "誰もが幸せを願ってる\n" +
+                                "どうしたって！\n" +
+                                "消せない夢も 止まれない今も\n" +
+                                "誰かのために強くなれるなら\n" +
+                                "ありがとう 悲しみよ\n" +
+                                "世界に打ちのめされて 負ける意味を知った\n" +
+                                "紅蓮の華よ咲き誇れ！ 運命を照らして\n" +
+                                "運命を照らして",
+                        new HashSet<>(artistaAlbumLisa),
+                        new HashSet<>(produtorMusicaLisa)
+                )); musicaController.adicionar(
+                new Musica(musicaController.getProximoId(),
+                        "cancellation",
+                        new HashSet<>(Collections.singleton("hip-hop")),
+                        "gongu no ne ga hibiitara\n" +
+                                "dare no sei ni mo dekinai kara\n" +
+                                "sekinin kitai seiron jogen sae mo ima wa mimizawari\n" +
+                                "fukai kokyuu de kakikeshita\n" +
+                                "\n" +
+                                "(Nervous?) Click clack (shaking) smash, knock out\n" +
+                                "kodoku ga faitingu songu\n" +
+                                "\n" +
+                                "Ready box\n" +
+                                "Bang bang bang bang uchitsukeru haato biito sukuriimu\n" +
+                                "(Can you hear your heart to beat?)\n" +
+                                "bones bones bones bones okuba ga kishimu haamoni\n" +
+                                "guchi wo haite tatakaenai yatsu ni\n" +
+                                "kuishibatte tatakatteru boku no kimochi nante wakare hazu ga nai ya\n" +
+                                "Noise cancellation\n" +
+                                "\n" +
+                                "yugaru kage donna toki mo kagami ni utsuru yowai boku wo taoshite kitan dakara\n" +
+                                "nijimu ase nigirishimeta kobushi no kizu no kazu wa honki ni natta akashi\n" +
+                                "\n" +
+                                "Bang bang bang bang uchitsukeru haato biito sukuriimu\n" +
+                                "(Can you hear your heart to beat?)\n" +
+                                "Bones bones bones bones okuba ga kishimu haamoni\n" +
+                                "kore shika nai to iikirenai yatsu ga\n" +
+                                "kore demo ka to sugaritsuku boku to ringu ni tatanaide\n" +
+                                "Noise cancellation\n" +
+                                "\n" +
+                                "namari no you ni omoi panchi kurau tabi ni\n" +
+                                "dareka no omoi no tsuyosa wo shitta\n" +
+                                "chi darake no bokura ni iitai koto ga aru nara\n" +
+                                "koko made kite yatte misero yo zako wa blocks way\n" +
+                                "\n" +
+                                "Ready box\n" +
+                                "Bang bang bang bang uchitsukeru haato biito sukuriimu\n" +
+                                "(Can you hear your heart to beat?)\n" +
+                                "Bones bones bones bones okuba ga kishimu haamoni\n" +
+                                "guchi wo haite tatakaenai yatsu ni\n" +
+                                "kuishibatte tatakatteru boku no kimochi nante wakannai na\n" +
+                                "honki wo narase hibike soul sound\n" +
+                                "Noise cancellation\n" +
+                                "\n" +
+                                "hikaru hou e susumu dake\n" +
+                                "Now it's showtime",
+                        new HashSet<>(artistaAlbumLisa),
+                        new HashSet<>(produtorMusicaLisa)
+                ));
+        var musicasDaLisa =
+                new ArrayList<>(musicaController.getMusicasAssociadas(4));
+        albumController.adicionar(
+                new Album(albumController.getProximoId(),
+                        "Leo-Nine",
+                        LocalDate.now(),
+                        musicasDaLisa));
     }
 
 }

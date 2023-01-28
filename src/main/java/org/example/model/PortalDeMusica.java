@@ -1,5 +1,10 @@
 package org.example.model;
 
+import org.example.controller.AlbumController;
+import org.example.controller.ArtistasController;
+import org.example.controller.MusicaController;
+import org.example.controller.ProdutorController;
+
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -64,8 +69,7 @@ public class PortalDeMusica {
     public void cadastrarMusica(String nome, List<String> genero, String letra, List<Artista> artistas, List<Produtor> produtores) {
         HashSet<Artista> artistaSet = new HashSet<>(artistas);
         HashSet<Produtor> produtorHashSet = new HashSet<>(produtores);
-        HashSet<String> generosHashSet = new HashSet<>(genero); System.out.println(musicaId);
-        System.out.println("bd cadastra musica");
+        HashSet<String> generosHashSet = new HashSet<>(genero);
         musicas.put(musicaId, new Musica(musicaId, nome, generosHashSet, letra, artistaSet, produtorHashSet));
         musicaId++;
     }
@@ -225,11 +229,11 @@ public class PortalDeMusica {
     /**
      * Este método busca todas as músicas que contêm o nome parecido com o parâmetro informado. É utilizado
      * principalmente para implementar a busca pelo nome de artistas na controller de música
-     * {@link controller.MusicaController#get(String)}
+     * {@link MusicaController#get(String)}
      *
      * @param nome da(s) músicas(s) procurada(s)
      * @return instáncia de música
-     * @see controller.MusicaController
+     * @see MusicaController
      */
     public List<Musica> getMusicaPeloNome(String nome) {
         return musicas.values().stream().filter(m -> m.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
@@ -238,11 +242,11 @@ public class PortalDeMusica {
     /**
      * Este método busca todas os artistas que contêm o nome parecido com o parâmetro informado. É utilizado
      * principalmente para implementar a busca pelo nome de artistas na controller de artistas
-     * {@link controller.ArtistasController#get(String)}
+     * {@link ArtistasController#get(String)}
      *
      * @param nome do(s) artista(s) procurado(s)
      * @return instáncia de artista
-     * @see controller.ArtistasController
+     * @see ArtistasController
      */
     public List<Artista> getArtistasPeloNome(String nome) {
         return artistas.values().stream().filter(a -> a.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
@@ -251,11 +255,11 @@ public class PortalDeMusica {
     /**
      * Este método busca todas os produtores que contêm o nome parecido com o parâmetro informado. É utilizado
      * principalmente para implementar a busca pelo nome de produtores na controller de produtores
-     * {@link controller.ProdutorController#get(String)}
+     * {@link ProdutorController#get(String)}
      *
      * @param nome do(s) produtor(s) procurado(s)
      * @return instáncia de produtor
-     * @see controller.ProdutorController
+     * @see ProdutorController
      */
     public List<Produtor> getProdutoresPeloNome(String nome) {
         return produtores.values().stream().filter(a -> a.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
@@ -264,11 +268,11 @@ public class PortalDeMusica {
     /**
      * Este método busca todas os álbums que contêm o nome parecido com o parâmetro informado. É utilizado
      * principalmente para implementar a busca pelo nome de álbums na controller de álbums
-     * {@link controller.AlbumController#get(String)}
+     * {@link AlbumController#get(String)}
      *
      * @param nome do(s) album(s) procurado(s)
      * @return instáncia de album
-     * @see controller.AlbumController
+     * @see AlbumController
      */
     public List<Album> getAlbumPeloNome(String nome) {
         return albums.values().stream().filter(a -> a.getNome().toLowerCase().contains(nome.toLowerCase())).collect(Collectors.toList());
