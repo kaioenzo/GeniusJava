@@ -47,7 +47,7 @@ public interface BaseController<K> {
      * que todas as classes principais da model, as quais essa controller genérica suporta, possuem o atributo nome.
      *
      * @param nome atributo nome do objeto
-     * @return
+     * @return generics atribuido
      * @see model.Album
      * @see model.Artista
      * @see model.Produtor

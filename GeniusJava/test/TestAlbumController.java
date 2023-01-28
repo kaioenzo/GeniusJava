@@ -40,9 +40,9 @@ public class TestAlbumController {
         produtorController.adicionar(produtor);
         var artista = new Artista(idInicial, artistaNomeInicial, LocalDate.now(), "descricao", "genero");
         artistasController.adicionar(artista);
-        var musica = new Musica(idInicial, musicaNomeInicial, new HashSet<String>(Collections.singleton("genero")), "letra",
-                new HashSet<Artista>(Collections.singleton(artista)),
-                new HashSet<Produtor>(Collections.singleton(produtorController.get(idInicial))));
+        var musica = new Musica(idInicial, musicaNomeInicial, new HashSet<>(Collections.singleton("genero")), "letra",
+                new HashSet<>(Collections.singleton(artista)),
+                new HashSet<>(Collections.singleton(produtorController.get(idInicial))));
         musicaController.adicionar(musica);
         var album = new Album(idInicial, albumNomeInicial, LocalDate.now(), new ArrayList<>(musicaController.get()));
         albumController.adicionar(album);

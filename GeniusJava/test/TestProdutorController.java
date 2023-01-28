@@ -31,9 +31,9 @@ class TestProdutorController {
 
         var artista = new Artista(1, "Artista "
                 , LocalDate.now(), "descricao", "genero");
-        var musica = new Musica(1, "Musica", new HashSet<String>(Collections.singleton("genero")), "letra",
-                new HashSet<Artista>(Collections.singleton(artista)),
-                new HashSet<Produtor>(Collections.singleton(produtorController.get(produtorIdInicial)))
+        var musica = new Musica(1, "Musica", new HashSet<>(Collections.singleton("genero")), "letra",
+                new HashSet<>(Collections.singleton(artista)),
+                new HashSet<>(Collections.singleton(produtorController.get(produtorIdInicial)))
         );
         musicaController.adicionar(musica);
     }

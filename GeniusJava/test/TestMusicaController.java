@@ -37,7 +37,8 @@ public class TestMusicaController {
                 Atribuicao.EXECUTIVO));
 
         var artista = new Artista(1, artistaNomeInicial, LocalDate.now(), "descricao", "genero");
-        var musica = new Musica(1, musicaNomeInicial, new HashSet<String>(Collections.singleton("genero")), "letra", new HashSet<Artista>(Collections.singleton(artista)), new HashSet<Produtor>(Collections.singleton(produtorController.get(idInicial))));
+        var musica = new Musica(1, musicaNomeInicial, new HashSet<>(Collections.singleton("genero")), "letra",
+                new HashSet<>(Collections.singleton(artista)), new HashSet<>(Collections.singleton(produtorController.get(idInicial))));
         artistasController.adicionar(artista);
         musicaController.adicionar(musica);
     }
