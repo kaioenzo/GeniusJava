@@ -4,4 +4,7 @@
 	<contentEntry url="file://$MODULE_DIR$">
 		<testFolder url="file://$MODULE_DIR$/test"/>
 	</contentEntry>
+	<levels>
+		<level name="junit.jupiter.api" value="project"/>
+	</levels>
 </component>

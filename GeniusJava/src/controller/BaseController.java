@@ -60,7 +60,7 @@ public interface BaseController<K> {
      *
      * @param id do objeto a ser excluído
      */
-    void excluir(int id);
+    int excluir(int id);
 
     /**
      * Este método deve implementar uma lógica para adicionar um objeto.
@@ -83,7 +83,7 @@ public interface BaseController<K> {
      * @see model.Produtor
      * @see model.Album
      */
-    void editar(int id, K infoAtualizada);
+    K editar(int id, K infoAtualizada);
 
     /**
      * Este método de implementar uma lógica que retorne o id do próximo objeto a ser cadastrado. Geralmente, este

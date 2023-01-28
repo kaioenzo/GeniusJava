@@ -20,9 +20,9 @@ import java.util.List;
 public class ProdutorController implements BaseController<Produtor> {
 
     /**
-     * Este método retorna todos os produtores cadastrados.
+     * Este metodo retorna todos os produtores cadastrados.
      *
-     * @return lista de todos os produtor cadastrados
+     * @return lista de todos os produtores cadastrados
      */
     @Override
     public List<Produtor> get() {
@@ -35,8 +35,10 @@ public class ProdutorController implements BaseController<Produtor> {
      * @param id do produtor a ser excluído
      */
     @Override
-    public void excluir(int id) {
+    public int excluir(int id) {
+        var idExcluido = bd.getProdutorPeloId(id).getId();
         bd.excluirProdutor(get(id));
+        return idExcluido;
     }
 
     /**
@@ -58,12 +60,13 @@ public class ProdutorController implements BaseController<Produtor> {
      * @param infoAtualizada informações atualizadas do produtor
      */
     @Override
-    public void editar(int id, Produtor infoAtualizada) {
+    public Produtor editar(int id, Produtor infoAtualizada) {
         var produtor = get(id);
         produtor.setNome(infoAtualizada.getNome());
         produtor.setDataDeNascimento(LocalDate.parse(infoAtualizada.getDataDeNascimentoFormatada(), formatter()));
         produtor.setFuncao(infoAtualizada.getFuncao());
         produtor.setDescricao(infoAtualizada.getDescricao());
+        return produtor;
     }
 
     /**
