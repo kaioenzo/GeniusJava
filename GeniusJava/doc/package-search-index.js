@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"GeniusJava","l":"controller"},{"m":"GeniusJava","l":"exceptions"},{"m":"GeniusJava","l":"main"},{"m":"GeniusJava","l":"model"},{"m":"GeniusJava","l":"view"},{"m":"GeniusJava","l":"view.components"}];updateSearchResults();

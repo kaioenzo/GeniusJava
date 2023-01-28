@@ -11,7 +11,7 @@ import java.util.List;
  * Esta interface genérica cria uma base para todas as controllores implementarem, contendo os métodos básicos de
  * CRUD, e métodos utilitários que podem ser requisistados pela view que utliza essa essa controller.
  *
- * @param <K> Tipo genérico para a construção dos métodos.
+ * @param <Model> Tipo genérico para a construção dos métodos.
  * @author Kaio Enzo Salgado
  * @version 1.0
  * @see AlbumController
@@ -19,7 +19,7 @@ import java.util.List;
  * @see MusicaController
  * @see ProdutorController
  */
-public interface BaseController<K> {
+public interface BaseController<Model> {
     /**
      * Garante que todas as controllers acessem a mesma instância na classe PortalDeMusica
      *
@@ -33,41 +33,41 @@ public interface BaseController<K> {
      * @param id do objeto que busca
      * @return aquele objeto
      */
-    K get(int id);
+    Model get(int id);
 
     /**
      * Este método deve implementar uma lógica parar retornar uma lista com todos os objetos.
      *
      * @return lista de objetos
      */
-    List<K> get();
+    List<Model> get();
 
     /**
      * Este método deve implementar uma lógica para  a busca de uma lista de objetos, pelo seu atributo de nome, visto
      * que todas as classes principais da model, as quais essa controller genérica suporta, possuem o atributo nome.
      *
      * @param nome atributo nome do objeto
-     * @return generics atribuido
+     * @return
      * @see model.Album
      * @see model.Artista
      * @see model.Produtor
      * @see model.Pessoa
      */
-    List<K> get(String nome);
+    List<Model> get(String nome);
 
     /**
      * Este método deve implementar uma lógica para excluir um objeto a partir do seu ID.
      *
      * @param id do objeto a ser excluído
      */
-    int excluir(int id);
+    void excluir(int id);
 
     /**
      * Este método deve implementar uma lógica para adicionar um objeto.
      *
      * @param objeto objeto a ser adicionado
      */
-    void adicionar(K objeto);
+    void adicionar(Model objeto);
 
     /**
      * Este método deve implementar uma lógica para alterar as informações de um objeto. Visando garantir os
@@ -83,7 +83,7 @@ public interface BaseController<K> {
      * @see model.Produtor
      * @see model.Album
      */
-    K editar(int id, K infoAtualizada);
+    K editar(int id, Model infoAtualizada);
 
     /**
      * Este método de implementar uma lógica que retorne o id do próximo objeto a ser cadastrado. Geralmente, este
