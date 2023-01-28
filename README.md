@@ -21,3 +21,5 @@ Projeto da matéria de Orientação a Objetos da Universidade Brasília.
 
 - [@kaioenzo](https://www.github.com/kaioenzo)
 
+## Aviso
+Devido a um problema com o classhpath e o junit, o projeto foi migrado para o maven, toda a construção do projeto pode ser observada na branch master, porém a main principal da aplicação agora está na branch maven-migration.
