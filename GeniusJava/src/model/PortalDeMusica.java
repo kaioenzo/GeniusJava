@@ -320,4 +320,21 @@ public class PortalDeMusica {
         produtores.remove(produtor.getId());
     }
 
+    /**
+     * Este método limpa todas as informacoes da classe e retorna os IDS ao valor 1, para que possibilite os testes
+     * unitários das controllers.
+     */
+    public void clear() {
+        musicas.clear();
+        albums.clear();
+        produtores.clear();
+        generosMusicais.clear();
+        artistas.clear();
+        artistaId = 1;
+        musicaId = 1;
+        albumId = 1;
+        produtorId = 1;
+        generoMusicalId = 1;
+
+    }
 }

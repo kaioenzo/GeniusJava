@@ -35,8 +35,10 @@ public class ArtistasController implements BaseController<Artista> {
      * @param id do artista a ser excluído
      */
     @Override
-    public void excluir(int id) {
+    public int excluir(int id) {
+        var idExcluid = bd.getArtistaPeloId(id).getId();
         bd.excluirArtista(bd.getArtistaPeloId(id));
+        return idExcluid;
     }
 
     /**
@@ -58,11 +60,12 @@ public class ArtistasController implements BaseController<Artista> {
      * @param infoAtualizada informações atualizadas do artista
      */
     @Override
-    public void editar(int id, Artista infoAtualizada) {
+    public Artista editar(int id, Artista infoAtualizada) {
         var artista = get(id); artista.setNome(infoAtualizada.getNome());
         artista.setDataDeNascimento(LocalDate.parse(infoAtualizada.getDataDeNascimentoFormatada(), formatter()));
         artista.setGeneroMusical(infoAtualizada.getGeneroMusical());
         artista.setDescricao(infoAtualizada.getDescricao());
+        return artista;
     }
 
     /**

@@ -58,8 +58,10 @@ public class AlbumController implements BaseController<Album> {
      * @param id do álbum a ser excluído
      */
     @Override
-    public void excluir(int id) {
+    public int excluir(int id) {
+        var idExcluido = bd.getAlbumPeloId(id).getId();
         bd.excluirAlbum(get(id));
+        return idExcluido;
     }
 
     /**
@@ -69,7 +71,8 @@ public class AlbumController implements BaseController<Album> {
      */
     @Override
     public void adicionar(Album objeto) throws MusicaJaFazParteDeAlbumException {
-        MusicaController musicaController = new MusicaController(); for (Musica musica : objeto.getMusicas()) {
+        MusicaController musicaController = new MusicaController();
+        for (Musica musica : objeto.getMusicas()) {
             if (musica.getFazParteAlbum()) {
                 throw new MusicaJaFazParteDeAlbumException(musica.getNome(), musicaController.getNomeAlbumAssociado(musica.getId()));
             }
@@ -84,9 +87,11 @@ public class AlbumController implements BaseController<Album> {
      * @param infoAtualizada informações atualizadas do álbum
      */
     @Override
-    public void editar(int id, Album infoAtualizada) {
-        var album = bd.getAlbumPeloId(id); album.setMusicas(infoAtualizada.getMusicas());
+    public Album editar(int id, Album infoAtualizada) {
+        var album = bd.getAlbumPeloId(id);
+        album.setMusicas(infoAtualizada.getMusicas());
         album.setNome(infoAtualizada.getNome());
+        return album;
     }
 
     /**

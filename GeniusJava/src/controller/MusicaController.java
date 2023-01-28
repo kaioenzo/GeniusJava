@@ -3,7 +3,6 @@ package controller;
 import model.Album;
 import model.Musica;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,10 +58,13 @@ public class MusicaController implements BaseController<Musica> {
      * @param id do artista a ser excluído
      */
     @Override
-    public void excluir(int id) {
-        var optionalAlbum = getAlbumAssocieado(id); if (optionalAlbum.isPresent()) {
+    public int excluir(int id) {
+        var idExcluido = bd.getMusicaPeloId(id).getId();
+        var optionalAlbum = getAlbumAssocieado(id);
+        if (optionalAlbum.isPresent()) {
             var album = optionalAlbum.get(); var musica = get(id); album.removerMusica(musica);
         } bd.exlcuirMusica(get(id));
+        return idExcluido;
     }
 
     /**
@@ -83,11 +85,12 @@ public class MusicaController implements BaseController<Musica> {
      * @param infoAtualizada informações atualizadas do artista
      */
     @Override
-    public void editar(int id, Musica infoAtualizada) {
+    public Musica editar(int id, Musica infoAtualizada) {
         var musica = get(id); musica.setNome(infoAtualizada.getNome()); musica.setLetra(infoAtualizada.getLetra());
         musica.adicionarArtistas(infoAtualizada.getArtistas());
         musica.adicionarProdutores(infoAtualizada.getProdutores());
         musica.adicionargenerosmusicais(infoAtualizada.getGeneros());
+        return musica;
     }
 
     /**
@@ -112,14 +115,6 @@ public class MusicaController implements BaseController<Musica> {
     }
 
     /**
-     * @return formatador padrão de datas para o padrão dd/MM/yyyy
-     */
-    @Override
-    public DateTimeFormatter formatter() {
-        return BaseController.super.formatter();
-    }
-
-    /**
      * @param musica instância
      * @return string com o nome dos artistas presentes na música informada
      */
@@ -131,7 +126,7 @@ public class MusicaController implements BaseController<Musica> {
 
     /**
      * @param musica instância
-     * @return string com o nome dos produtores presentes na música informada
+     * @return ‘string’ com o nome dos produtores presentes na música informada
      */
     public String produtoresString(Musica musica) {
         List<String> produtores = new ArrayList<>();
@@ -143,7 +138,7 @@ public class MusicaController implements BaseController<Musica> {
      * Este método procura o nome do álbum associado a uma música
      *
      * @param id da música
-     * @return String com o nome do álbum ou mensagem padrão
+     * @return ‘String’ com o nome do álbum ou mensagem padrão
      */
     public String getNomeAlbumAssociado(int id) {
         var musica = get(id); var albums = albumController.get();
@@ -157,13 +152,10 @@ public class MusicaController implements BaseController<Musica> {
      * Este método procura um álbum associado a uma música
      *
      * @param id da música
-     * @return instância  do álbum
+     * @return instância do lbum
      */
     public Optional<Album> getAlbumAssocieado(int id) {
         var musica = get(id); var albums = albumController.get();
-        var optional = albums.stream().filter(album -> album.getMusicas().contains(musica)).findFirst();
-        if (optional.isPresent()) {
-            return optional;
-        } return optional;
+        return albums.stream().filter(album -> album.getMusicas().contains(musica)).findFirst();
     }
 }

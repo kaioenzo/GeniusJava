@@ -83,7 +83,7 @@ public interface BaseController<Model> {
      * @see model.Produtor
      * @see model.Album
      */
-    void editar(int id, Model infoAtualizada);
+    K editar(int id, Model infoAtualizada);
 
     /**
      * Este método de implementar uma lógica que retorne o id do próximo objeto a ser cadastrado. Geralmente, este
