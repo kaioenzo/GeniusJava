@@ -13,6 +13,10 @@ Projeto da matéria de Orientação a Objetos da Universidade Brasília.
 - CRUD de música e letra de música
 - CRUD de Álbum
 
+## Teste
+O pacote controller está com 100% de teste coverage. Testando os mais de 40 métodos e 100 linhas desse pacote. 
+
+![](https://github.com/kaioenzo/GeniusJava/blob/maven-migration/imagem_2023-01-28_155106323.png)
 
 ## Demonstração
 
